@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.healthanalyzers.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_report"
+        android:name="com.example.healthanalyzers.ui.report.ReportFragment"
+        android:label="@string/title_report"
+        tools:layout="@layout/fragment_report" />
+
+    <fragment
+        android:id="@+id/navigation_knowledge"
+        android:name="com.example.healthanalyzers.ui.knowledge.KnowledgeFragment"
+        android:label="@string/title_knowledge"
+        tools:layout="@layout/fragment_knowledge" />
+
+    <fragment
+        android:id="@+id/navigation_mine"
+        android:name="com.example.healthanalyzers.ui.mine.MineFragment"
+        android:label="@string/title_mine"
+        tools:layout="@layout/fragment_mine" />
+</navigation>
