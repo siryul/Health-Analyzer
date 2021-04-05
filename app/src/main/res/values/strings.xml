@@ -20,4 +20,6 @@
     <string name="register">register</string>
     <string name="forget_password">forget password</string>
     <string name="other_login_methods">Other login methods</string>
+    <string name="comply_protocol">我自愿遵守使用相关程序的</string>
+    <string name="protocol">《协议》</string>
 </resources>

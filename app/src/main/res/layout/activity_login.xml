@@ -145,6 +145,60 @@
 
     <!--其他登录方式列表-->
     <!--qq，微信，电话-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageButton
+            android:id="@+id/image_btn_qq_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_qq_24" />
+        <ImageButton
+            android:id="@+id/image_btn_weChat_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ic_wechat_24" />
+        <ImageButton
+            android:id="@+id/image_btn_phone_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ic_phone_24" />
+
+    </LinearLayout>
+
+    <!--所需要遵守的协议-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent" >
+
+        <CheckBox
+            android:id="@+id/comply_protocol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/CustomCheckBoxTheme"
+            android:paddingLeft="5dp"
+            android:text="@string/comply_protocol" />
+        <TextView
+            android:id="@+id/tv_protocol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/protocol"
+            android:textColor="@color/red" />
+    </LinearLayout>
 
 
 
