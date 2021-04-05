@@ -65,8 +65,9 @@
             android:id="@+id/rememberPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/CustomCheckBoxTheme"
             android:layout_gravity="left"
-
+            android:paddingLeft="5dp"
             android:text="@string/remember_password" />
 
         <TextView
@@ -141,6 +142,10 @@
         android:layout_marginBottom="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:ignore="MissingConstraints" />
+
+    <!--其他登录方式列表-->
+    <!--qq，微信，电话-->
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
