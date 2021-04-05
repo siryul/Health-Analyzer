@@ -1,7 +1,10 @@
 package com.example.healthanalyzers.ui.login
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -10,14 +13,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.Toast
+import android.widget.*
+import androidx.annotation.RequiresApi
 import com.example.healthanalyzers.MainActivity
 
 import com.example.healthanalyzers.R
+import com.example.healthanalyzers.databinding.ActivityLoginBinding
+import com.githang.statusbar.StatusBarCompat
 
 class LoginActivity : AppCompatActivity() {
 
@@ -26,12 +30,17 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         setContentView(R.layout.activity_login)
+
 
         val username = findViewById<EditText>(R.id.username)
         val password = findViewById<EditText>(R.id.password)
         val login = findViewById<Button>(R.id.login)
         val loading = findViewById<ProgressBar>(R.id.loading)
+        val tv_protocol = findViewById<TextView>(R.id.tv_protocol)
+
+
 
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
@@ -100,6 +109,18 @@ class LoginActivity : AppCompatActivity() {
                 loginViewModel.login(username.text.toString(), password.text.toString())
             }
         }
+
+        // 点击《协议》展示内容
+        tv_protocol.setOnClickListener {
+            AlertDialog.Builder(this).apply {
+                setTitle("《协议》")
+                setMessage("使用本软件所产生的所有数据均不会被商用。")
+                setCancelable(false)
+                setPositiveButton("OK") {dialog, which ->}
+
+                show()
+            }
+        }
     }
 
     private fun updateUiWithUser(model: LoggedInUserView) {
@@ -115,6 +136,13 @@ class LoginActivity : AppCompatActivity() {
 
     private fun showLoginFailed(@StringRes errorString: Int) {
         Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    override fun onResume() {
+        super.onResume()
+        // 状态栏颜色设为与顶部导航栏一致
+        StatusBarCompat.setStatusBarColor(this, Color.parseColor(R.color.design_default_color_primary.toString()))
     }
 }
 

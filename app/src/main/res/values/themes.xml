@@ -13,6 +13,11 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    
+    <!--LoginActivityTheme 状态栏颜色-->
+<!--    <style name="LoginActivityTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar" >-->
+<!--        <item name="colorLogin">@color/purple_500</item>-->
+<!--    </style>-->
 
     <!--自定义 checkbox 样式-->
     <style name="CustomCheckBoxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
