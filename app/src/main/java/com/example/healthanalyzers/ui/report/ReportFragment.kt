@@ -9,8 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.healthanalyzers.R
+import com.gyf.immersionbar.components.ImmersionFragment
+import com.gyf.immersionbar.components.ImmersionOwner
 
-class ReportFragment : Fragment() {
+class ReportFragment : Fragment(), ImmersionOwner {
 
     private lateinit var reportViewModel: ReportViewModel
 
@@ -28,4 +30,30 @@ class ReportFragment : Fragment() {
         })
         return root
     }
+
+    override fun onLazyAfterView() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onInvisible() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onLazyBeforeView() {
+        TODO("Not yet implemented")
+    }
+
+    override fun immersionBarEnabled(): Boolean {
+        return true
+    }
+
+    override fun onVisible() {
+        TODO("Not yet implemented")
+    }
+
+    override fun initImmersionBar() {
+        TODO("Not yet implemented")
+    }
+
+    
 }

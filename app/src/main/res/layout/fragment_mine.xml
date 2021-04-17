@@ -6,17 +6,43 @@
     android:layout_height="match_parent"
     tools:context=".ui.mine.MineFragment">
 
-    <TextView
-        android:id="@+id/text_mine"
+    <LinearLayout
+        android:id="@+id/avatar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image_me"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/ic_avatar_boy_96"
+            app:civ_border_color="@color/black"
+            app:civ_border_width="2dp"
+            tools:ignore="MissingConstraints" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/avatar"
+        app:layout_constraintVertical_weight="1"
+        tools:ignore="MissingConstraints">
+
+        <!--        设置选项-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_me"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            tools:listitem="@layout/me_item" />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,4 +10,7 @@
     <color name="gray">#FFE9ECEF</color>
     <color name="deep_gray">#FF495057</color>
     <color name="red">#FFf03e3e</color>
+    <color name="MainActivityColor">#FF6200EE</color>
+
+    <color name="silver_blue">#e1e3e6</color>
 </resources>

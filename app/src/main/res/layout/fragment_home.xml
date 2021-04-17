@@ -1,25 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/text_home"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        tools:listitem="@layout/func_item" />
 
 
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/hello"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        app:layout_constraintVertical_weight="1"-->
+    <!--        tools:ignore="MissingConstraints"-->
+    <!--        android:orientation="horizontal">-->
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!--    </LinearLayout>-->
+
+    <!--    <ImageButton-->
+    <!--        android:id="@+id/image_btn_heart_rate"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:background="@drawable/ic_heart_rate_64"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--        app:layout_constraintRight_toRightOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/tv_heart"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="@string/heart_rate"-->
+    <!--        android:layout_marginTop="5dp"-->
+    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--        app:layout_constraintRight_toRightOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/image_btn_heart_rate"-->
+    <!--        android:textSize="10sp" />-->
+
+    <!--    <ImageButton-->
+    <!--        android:id="@+id/image_btn_blood_oxygen"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:background="@drawable/ic_blood_oxygen_64"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--        app:layout_constraintRight_toLeftOf="@id/image_btn_heart_rate"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/tv_oxygen"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="@string/oxygen_blood"-->
+    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--        android:layout_marginTop="5dp"-->
+    <!--        app:layout_constraintRight_toLeftOf="@id/tv_heart"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/image_btn_blood_oxygen"-->
+    <!--        android:textSize="10sp" />-->
+
+    <!--    <ImageButton-->
+    <!--        android:id="@+id/image_btn_psychological_sleep_quality"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:background="@drawable/ic_psychological_sleep_quality_64"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintLeft_toRightOf="@id/image_btn_heart_rate"-->
+    <!--        app:layout_constraintRight_toRightOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/tv_sleep"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="@string/sleep_quality"-->
+    <!--        android:layout_marginTop="5dp"-->
+    <!--        app:layout_constraintRight_toRightOf="parent"-->
+    <!--        app:layout_constraintLeft_toRightOf="@id/tv_heart"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/image_btn_psychological_sleep_quality"-->
+    <!--        android:textSize="10sp" />-->
+
+    <!--    <ImageButton-->
+    <!--        android:id="@+id/image_btn_bodyfat"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:background="@drawable/ic_bodyfat_64"-->
+    <!--        android:layout_marginTop="30dp"-->
+    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--        app:layout_constraintRight_toRightOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/image_btn_heart_rate" />-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/tv_fat"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="@string/body_fat"-->
+    <!--        android:layout_marginTop="5dp"-->
+    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--        app:layout_constraintRight_toRightOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/image_btn_bodyfat"-->
+    <!--        android:textSize="10sp" />-->
+
+    <!--    <ImageButton-->
+    <!--        android:id="@+id/image_btn_high"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:background="@drawable/ic_high_64"-->
+    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--        android:layout_marginTop="30dp"-->
+    <!--        app:layout_constraintRight_toLeftOf="@id/image_btn_bodyfat"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/image_btn_blood_oxygen" />-->
+    <!--    <TextView-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="@string/height"-->
+    <!--        android:layout_marginTop="5dp"-->
+    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--        app:layout_constraintRight_toLeftOf="@id/tv_fat"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/image_btn_high"-->
+    <!--        android:textSize="10sp" />-->
+
+</LinearLayout>

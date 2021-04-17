@@ -9,4 +9,10 @@ class MineViewModel: ViewModel() {
         value = "This  is me Fragment"
     }
     val text: LiveData<String> = _text
+
+    // 用户名
+    private val _username = MutableLiveData<String>().apply {
+        value = "This  is me Fragment"
+    }
+    val username: LiveData<String> = _username
 }
