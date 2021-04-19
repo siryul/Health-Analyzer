@@ -9,7 +9,7 @@ import com.example.healthanalyzers.entity.User
 
 @Database(version = 1, entities = [User::class])
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun userDao(): UserDao
+    // abstract fun userDao(): UserDao
 
     companion object {
         private var instance: AppDatabase? = null

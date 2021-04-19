@@ -14,7 +14,7 @@ class RegisterActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         immersionBar {
-            statusBarColor(R.color.MainActivityColor)
+            statusBarColor(R.color.actionbar_color)
         }
     }
 }

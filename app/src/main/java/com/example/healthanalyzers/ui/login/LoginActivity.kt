@@ -214,8 +214,9 @@ class LoginActivity : AppCompatActivity() {
         super.onResume()
         // 设置状态栏颜色
         immersionBar {
-            statusBarColor(R.color.MainActivityColor)
+            statusBarColor(R.color.actionbar_color)
             // navigationBarColor(R.color.MainActivityColor)
+            fitsSystemWindows(true)
         }
     }
 }

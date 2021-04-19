@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.healthanalyzers">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,11 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HealthAnalyzers">
-        <activity android:name=".ui.forgotPassword.ForgotPasswordActivity"
-            android:label="@string/retrieve_password">
-
-        </activity>
-        <activity android:name=".ui.register.RegisterActivity" android:label="@string/register"/>
+        <activity
+            android:name=".ui.mine.AlterUsernameActivity"
+            android:label="@string/alter_username"></activity>
+        <activity
+            android:name=".ui.forgotPassword.ForgotPasswordActivity"
+            android:label="@string/retrieve_password"></activity>
+        <activity
+            android:name=".ui.register.RegisterActivity"
+            android:label="@string/register" />
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login">

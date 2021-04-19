@@ -13,4 +13,7 @@
     <color name="MainActivityColor">#FF6200EE</color>
 
     <color name="silver_blue">#e1e3e6</color>
+    <color name="clam_flour">#fdfff4</color>
+    <color name="background">#fff2f3f5</color>
+    <color name="actionbar_color">#0f7ef6</color>
 </resources>

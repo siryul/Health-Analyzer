@@ -21,7 +21,7 @@
     <string name="login_failed">"登录失败"</string>
     <string name="remember_password">记住密码</string>
     <string name="register">注册</string>
-    <string name="forget_password">忘记密码</string>
+    <string name="forget_password">忘记密码?</string>
     <string name="other_login_methods">其他登录方式</string>
     <string name="comply_protocol">我自愿遵守使用相关程序的</string>
     <string name="protocol">《协议》</string>
@@ -32,4 +32,7 @@
     <string name="height">身高</string>
     <string name="sleep_quality">睡眠质量</string>
     <string name="oxygen_blood">血氧量</string>
+    <string name="alter_username">修改用户名</string>
+    <string name="alter_nickname">修改昵称</string>
+    <string name="analyzers">检测</string>
 </resources>

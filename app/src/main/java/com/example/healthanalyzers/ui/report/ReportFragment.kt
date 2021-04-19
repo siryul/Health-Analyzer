@@ -12,7 +12,7 @@ import com.example.healthanalyzers.R
 import com.gyf.immersionbar.components.ImmersionFragment
 import com.gyf.immersionbar.components.ImmersionOwner
 
-class ReportFragment : Fragment(), ImmersionOwner {
+class ReportFragment : Fragment() {
 
     private lateinit var reportViewModel: ReportViewModel
 
@@ -24,36 +24,10 @@ class ReportFragment : Fragment(), ImmersionOwner {
         reportViewModel =
                 ViewModelProvider(this).get(ReportViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_report, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        reportViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+//        val textView: TextView = root.findViewById(R.id.text_dashboard)
+//        reportViewModel.text.observe(viewLifecycleOwner, Observer {
+//            textView.text = it
+//        })
         return root
     }
-
-    override fun onLazyAfterView() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onInvisible() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onLazyBeforeView() {
-        TODO("Not yet implemented")
-    }
-
-    override fun immersionBarEnabled(): Boolean {
-        return true
-    }
-
-    override fun onVisible() {
-        TODO("Not yet implemented")
-    }
-
-    override fun initImmersionBar() {
-        TODO("Not yet implemented")
-    }
-
-    
 }
