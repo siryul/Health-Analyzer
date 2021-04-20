@@ -33,6 +33,24 @@
     <string name="sleep_quality">睡眠质量</string>
     <string name="oxygen_blood">血氧量</string>
     <string name="alter_username">修改用户名</string>
+    <string name="alter_sex">修改性别</string>
     <string name="alter_nickname">修改昵称</string>
+    <string name="alter_age">修改年龄</string>
+    <string name="alter_weight">修改体重</string>
+    <string name="alter_high">修改身高</string>
     <string name="analyzers">检测</string>
+    <string name="save">保存</string>
+    <string name="nickname">昵称</string>
+    <string name="sex">性别</string>
+    <string name="high">身高</string>
+    <string name="weight">体重</string>
+    <string name="age">年龄</string>
+    <string name="manage_devices">管理设备</string>
+    <string name="add_by_hand">手动添加</string>
+    <string name="scan">扫一扫</string>
+    <string name="logout">注销</string>
+    <string name="alter_password">修改密码</string>
+    <string name="make_sure_logout">确认注销</string>
+    <string name="cancel">取消</string>
+
 </resources>

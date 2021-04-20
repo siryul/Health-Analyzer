@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.mine.AlterUsernameActivity">
+    tools:context=".ui.mine.AlterNicknameActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
-        android:background="@color/actionbar_color"
         android:layout_height="?attr/actionBarSize"
+        android:background="@color/actionbar_color"
         tools:ignore="MissingConstraints">
+
         <ImageButton
             android:id="@+id/image_btn_back"
             android:layout_width="wrap_content"
@@ -19,17 +20,17 @@
             android:src="@drawable/ic_back_24dp" />
 
         <TextView
+            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity = "center"
-            android:textSize="20sp"
-            android:text="@string/alter_username"
+            android:layout_gravity="center"
+            android:text="@string/alter_nickname"
             android:textColor="@color/white"
-            android:id="@+id/tv_title" />
+            android:textSize="20sp" />
     </androidx.appcompat.widget.Toolbar>
 
     <EditText
-        android:id="@+id/et_alter_username"
+        android:id="@+id/et_alter_nickname"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -37,7 +38,7 @@
         android:layout_marginEnd="24dp"
         android:drawableLeft="@drawable/ic_user_32"
         android:drawablePadding="10dp"
-        android:hint="@string/prompt_email"
+        android:hint="@string/nickname"
         android:inputType="textEmailAddress"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,14 +46,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btn_alter_username"
+        android:id="@+id/btn_alter_nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="@string/save"
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintRight_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_alter_username" />
+        app:layout_constraintTop_toBottomOf="@+id/et_alter_nickname" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

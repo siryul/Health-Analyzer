@@ -5,11 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.healthanalyzers.R
 import com.example.healthanalyzers.bean.Mine
+import com.example.healthanalyzers.ui.mine.AlterNicknameActivity
 import com.example.healthanalyzers.ui.mine.AlterUsernameActivity
 
 class MineAdapter(val mineList: List<Mine>) : RecyclerView.Adapter<MineAdapter.ViewHolder>() {
@@ -38,7 +37,8 @@ class MineAdapter(val mineList: List<Mine>) : RecyclerView.Adapter<MineAdapter.V
                 }
                 // 昵称
                 1 -> {
-
+                    val intent =Intent(parent.context, AlterNicknameActivity::class.java)
+                    parent.context.startActivity(intent)
                 }
                 // 性别
                 2 -> {

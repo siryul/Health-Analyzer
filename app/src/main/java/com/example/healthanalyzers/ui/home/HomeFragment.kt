@@ -1,18 +1,20 @@
 package com.example.healthanalyzers.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.healthanalyzers.bean.Func
 import com.example.healthanalyzers.R
 import com.example.healthanalyzers.adapter.FuncAdapter
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.healthanalyzers.bean.Func
+import com.example.healthanalyzers.ui.devices.ManageDevicesActivity
 import com.gyf.immersionbar.ktx.immersionBar
 
 class HomeFragment : Fragment() {
@@ -42,6 +44,15 @@ class HomeFragment : Fragment() {
         recyclerView.layoutManager = layoutManager
         val adapter = FuncAdapter(funcList)
         recyclerView.adapter = adapter
+
+        // 管理设备\
+        val cd_manage_devices = root.findViewById<CardView>(R.id.cd_manage_devices)
+        cd_manage_devices.setOnClickListener {
+            // context?.let { it1 -> Toasty.success(it1, "success", Toasty.LENGTH_SHORT, true).show() }
+            val intent = Intent(context, ManageDevicesActivity::class.java)
+            startActivity(intent)
+        }
+
         return root
     }
 

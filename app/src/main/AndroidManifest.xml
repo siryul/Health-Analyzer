@@ -11,12 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HealthAnalyzers">
+        <activity android:name=".ui.devices.ManageDevicesActivity"></activity>
+        <activity android:name=".ui.mine.AlterAgeActivity" />
+        <activity android:name=".ui.mine.AlterNicknameActivity" />
         <activity
             android:name=".ui.mine.AlterUsernameActivity"
-            android:label="@string/alter_username"></activity>
+            android:label="@string/alter_username" />
         <activity
             android:name=".ui.forgotPassword.ForgotPasswordActivity"
-            android:label="@string/retrieve_password"></activity>
+            android:label="@string/retrieve_password" />
         <activity
             android:name=".ui.register.RegisterActivity"
             android:label="@string/register" />

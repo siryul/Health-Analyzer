@@ -1,20 +1,18 @@
 package com.example.healthanalyzers.ui.mine;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+
+import android.os.Bundle
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.PopupWindow
 import android.widget.TextView
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerViewAccessibilityDelegate
-
-
-import com.example.healthanalyzers.R;
+import com.example.healthanalyzers.R
 import com.example.healthanalyzers.adapter.MineAdapter
-import com.example.healthanalyzers.bean.Func
 import com.example.healthanalyzers.bean.Mine
 import com.gyf.immersionbar.ktx.immersionBar
 
@@ -47,6 +45,33 @@ class MineFragment : androidx.fragment.app.Fragment() {
         recyclerView.adapter = adapter
         // recyclerView.addItemDecoration(RecyclerView.ItemDecoration)
 
+        // 注销操作
+        val tv_logout = root.findViewById<TextView>(R.id.tv_logout)
+        tv_logout.setOnClickListener {
+            val popwindow_logout = LayoutInflater.from(context).inflate(R.layout.popwindow_logout, null)
+            val popupWindow = PopupWindow(
+                popwindow_logout,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                true
+            )
+            popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 80)
+            popupWindow.isTouchable = true
+
+            // 处理弹窗中按钮事件
+            val tv_make_sure_logout = popwindow_logout.findViewById<TextView>(R.id.tv_make_sure_logout)
+            val tv_cancel = popwindow_logout.findViewById<TextView>(R.id.tv_cancel)
+
+            tv_cancel.setOnClickListener {
+                popupWindow.dismiss()
+            }
+
+            tv_make_sure_logout.setOnClickListener {
+                // 点击确认注销之后，注销数据库中账号信息，并跳转至登录页面
+
+            }
+        }
+
         return root
     }
 
@@ -54,7 +79,7 @@ class MineFragment : androidx.fragment.app.Fragment() {
         mineList.add(Mine("用户名"))
         mineList.add(Mine("昵称"))
         mineList.add(Mine("性别"))
-        mineList.add(Mine("出生日期"))
+        mineList.add(Mine("年龄"))
         mineList.add(Mine("身高"))
         mineList.add(Mine("体重"))
     }
