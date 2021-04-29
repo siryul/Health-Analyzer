@@ -16,4 +16,5 @@
     <color name="clam_flour">#fdfff4</color>
     <color name="background">#fff2f3f5</color>
     <color name="actionbar_color">#0f7ef6</color>
+    <color name="hint_text_color">#ff919191</color>
 </resources>

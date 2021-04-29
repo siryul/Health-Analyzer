@@ -7,7 +7,11 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.healthanalyzers.R
+import com.example.healthanalyzers.data.UserInformation
 import es.dmoral.toasty.Toasty
+import java.io.IOException
+import java.sql.DriverManager
+import kotlin.concurrent.thread
 
 class AlterNicknameActivity : AppCompatActivity() {
     // 记录点击过保存的用户名最新结果
@@ -33,8 +37,30 @@ class AlterNicknameActivity : AppCompatActivity() {
         val image_btn_back = findViewById<ImageButton>(R.id.image_btn_back)
         image_btn_back.setOnClickListener {
             // 将最后的结果存回数据库
+            val userInformation = getApplication() as UserInformation
+            thread {
+                val sql =
+                    "UPDATE user SET nickName = \'$resultNickname\' WHERE userName = ${userInformation.account}"
+                try {
+                    Class.forName("com.mysql.jdbc.Driver")
+                    val connection = DriverManager.getConnection(
+                        "jdbc:mysql://192.168.220.1:3306/health?useSSL=false&allowPublicKeyRetrieval=true",
+                        "root", "666666"
+                    )
+                    val statement = connection.createStatement()
+                    statement.executeUpdate(sql)
 
-            finish()
+                    statement.close()
+                    connection.close()
+
+                    finish()
+                } catch (e: ClassNotFoundException) {
+                    e.printStackTrace()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+
+                }
+            }.start()
         }
         supportActionBar?.hide()
     }

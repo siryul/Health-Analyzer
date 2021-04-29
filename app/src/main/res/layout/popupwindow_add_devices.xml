@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="200dp"
+    android:layout_height="wrap_content"
+    app:cardElevation="1dp"
+    app:cardCornerRadius="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_heart_rate_device"
+            style="@style/add_devices_item"
+            android:text="@string/heart_rate_device" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/silver_blue" />
+
+        <TextView
+            android:id="@+id/tv_wristband_device"
+            style="@style/add_devices_item"
+            android:text="@string/wristband" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/silver_blue" />
+
+        <TextView
+            android:id="@+id/tv_thermometer"
+            style="@style/add_devices_item"
+            android:text="@string/thermometer" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/silver_blue" />
+
+        <TextView
+            android:id="@+id/tv_body_fat_scale"
+            style="@style/add_devices_item"
+            android:text="@string/body_fat_scale" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/silver_blue" />
+
+        <TextView
+            android:id="@+id/tv_oximeter"
+            style="@style/add_devices_item"
+            android:text="@string/oximeter" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/silver_blue" />
+
+        <TextView
+            android:id="@+id/tv_sphygmomanometer"
+            style="@style/add_devices_item"
+            android:text="@string/sphygmomanometer" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/silver_blue" />
+
+        <TextView
+            android:id="@+id/tv_blood_glucose_meter"
+            style="@style/add_devices_item"
+            android:text="@string/blood_glucose_meter" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/silver_blue" />
+
+        <TextView
+            android:id="@+id/tv_height_meter"
+            style="@style/add_devices_item"
+            android:text="@string/height_meter" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

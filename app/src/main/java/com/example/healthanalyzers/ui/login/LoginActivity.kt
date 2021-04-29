@@ -4,11 +4,11 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.*
@@ -22,6 +22,9 @@ import com.example.healthanalyzers.databinding.ActivityLoginBinding
 import com.example.healthanalyzers.ui.forgotPassword.ForgotPasswordActivity
 import com.example.healthanalyzers.ui.register.RegisterActivity
 import com.gyf.immersionbar.ktx.immersionBar
+import es.dmoral.toasty.Toasty
+import java.io.IOException
+import java.sql.DriverManager
 
 class LoginActivity : AppCompatActivity() {
 
@@ -101,34 +104,79 @@ class LoginActivity : AppCompatActivity() {
             // 记住密码
             val account = binding.username.text.toString()
             val pass = binding.password.text.toString()
-            if (account == "admin" && pass == "123456") {
-                val editor = prefs.edit()
-                // 检查记住密码框是否被选中
-                if (binding.rememberPassword.isChecked) {
-                    editor.putBoolean("remember_password", true)
-                    editor.putString("account", account)
-                    editor.putString("password", pass)
-                } else {
-                    editor.clear()
-                }
-                editor.apply()
+            // flag 标志用户是否存在
+            var flag = false
+            var realPassword = ""
 
-                // 是否同意协议
-                if (binding.complyProtocol.isChecked) {
-                    editor.putBoolean("comply_protocol", true)
-                    editor.apply()
-                    //Complete and destroy login activity once successful
-                    // 转到主界面
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                } else {
-                    Toast.makeText(this, "请同意使用软件相关协议", Toast.LENGTH_SHORT).show()
-                }
-            } else {
-                Toast.makeText(this, "用户名或者密码错误！", Toast.LENGTH_SHORT).show()
-            }
+            // 查询数据库
+            val sql = "SELECT password FROM user WHERE userName = ${account}"
+            Thread(Runnable {
+                try {
+                    Class.forName("com.mysql.jdbc.Driver")
+                    val con = DriverManager.getConnection(
+                        "jdbc:mysql://192.168.220.1:3306/health?useSSL=false&allowPublicKeyRetrieval=true",
+                        "root", "666666"
+                    )
+                    val statement = con.createStatement()
+                    val resultSet = statement.executeQuery(sql)
+                    while (resultSet.next()) {
+                        realPassword = resultSet.getString("password")
+                        flag = true
+                        Log.d("LoginThread", "用户存在标志为：${flag}, password = ${realPassword}")
+                    }
 
+                    statement?.close()
+                    con?.close()
+
+                    Log.d("LoginMain", "验证前用户存在标志为：${flag}")
+                    // 此处需注意多线程执行顺序，若放在子线程外面，就需要考虑多线程之间执行顺序的问题
+                    if (flag) {
+                        if (pass.equals(realPassword)) {
+                            val editor = prefs.edit()
+                            // 检查记住密码框是否被选中
+                            if (binding.rememberPassword.isChecked) {
+                                editor.putBoolean("remember_password", true)
+                                editor.putString("account", account)
+                                editor.putString("password", pass)
+                            } else {
+                                editor.clear()
+                            }
+                            editor.apply()
+
+                            // 是否同意协议
+                            if (binding.complyProtocol.isChecked) {
+                                editor.putBoolean("comply_protocol", true)
+                                editor.apply()
+                                // Complete and destroy login activity once successful
+                                // 转到主界面
+                                val intent = Intent(this, MainActivity::class.java)
+                                intent.putExtra("account", account)
+                                intent.putExtra("password", pass)
+                                startActivity(intent)
+                                finish()
+                            } else {
+                                Looper.prepare()
+                                Toasty.warning(
+                                    this, "请同意使用软件相关协议", Toast.LENGTH_SHORT
+                                ).show()
+                                Looper.loop()
+                            }
+                        } else {
+                            Looper.prepare()
+                            Toasty.error(this, "密码错误！", Toast.LENGTH_SHORT).show()
+                            Looper.loop()
+                        }
+                    } else { // flag
+                        Looper.prepare()
+                        Toasty.error(this, "用户不存在！", Toasty.LENGTH_SHORT, true).show()
+                        Looper.loop()
+                    }
+                } catch (e: ClassNotFoundException) {
+                    e.printStackTrace()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }).start()
         })
 
         binding.username.afterTextChanged {
@@ -159,7 +207,10 @@ class LoginActivity : AppCompatActivity() {
 
             binding.login.setOnClickListener {
                 binding.loading.visibility = View.VISIBLE
-                loginViewModel.login(binding.username.text.toString(), binding.password.text.toString())
+                loginViewModel.login(
+                    binding.username.text.toString(),
+                    binding.password.text.toString()
+                )
             }
         }
 
@@ -169,7 +220,7 @@ class LoginActivity : AppCompatActivity() {
                 setTitle("《协议》")
                 setMessage("使用本软件所产生的所有数据均不会被商用。")
                 setCancelable(false)
-                setPositiveButton("OK") {dialog, which ->}
+                setPositiveButton("OK") { dialog, which -> }
 
                 show()
             }
@@ -197,13 +248,7 @@ class LoginActivity : AppCompatActivity() {
     } // onCreate
 
     private fun updateUiWithUser(model: LoggedInUserView) {
-        val welcome = getString(R.string.welcome)
         // TODO : initiate successful logged in experience
-        Toast.makeText(
-            applicationContext,
-            "$welcome",
-            Toast.LENGTH_SHORT
-        ).show()
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {

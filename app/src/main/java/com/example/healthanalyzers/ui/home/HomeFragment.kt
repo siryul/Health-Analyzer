@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.healthanalyzers.R
 import com.example.healthanalyzers.adapter.FuncAdapter
 import com.example.healthanalyzers.bean.Func
+import com.example.healthanalyzers.data.UserInformation
 import com.example.healthanalyzers.ui.devices.ManageDevicesActivity
 import com.gyf.immersionbar.ktx.immersionBar
 
@@ -39,10 +40,12 @@ class HomeFragment : Fragment() {
         })
         // 初始化功能列表数据
         initFunc()
+        val account = (activity?.getApplication() as UserInformation).account
+
         // val layoutManager = LinearLayoutManager(context)
         val layoutManager = GridLayoutManager(context, 3)
         recyclerView.layoutManager = layoutManager
-        val adapter = FuncAdapter(funcList)
+        val adapter = FuncAdapter(funcList, account)
         recyclerView.adapter = adapter
 
         // 管理设备\

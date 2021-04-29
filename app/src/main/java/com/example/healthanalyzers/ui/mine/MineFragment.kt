@@ -1,6 +1,7 @@
 package com.example.healthanalyzers.ui.mine;
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -14,7 +15,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.healthanalyzers.R
 import com.example.healthanalyzers.adapter.MineAdapter
 import com.example.healthanalyzers.bean.Mine
+import com.example.healthanalyzers.data.UserInformation
 import com.gyf.immersionbar.ktx.immersionBar
+import java.io.IOException
+import java.sql.DriverManager
 
 
 class MineFragment : androidx.fragment.app.Fragment() {
@@ -45,10 +49,18 @@ class MineFragment : androidx.fragment.app.Fragment() {
         recyclerView.adapter = adapter
         // recyclerView.addItemDecoration(RecyclerView.ItemDecoration)
 
+        // 修改密码
+        val tv_alter_password = root.findViewById<TextView>(R.id.tv_alter_password)
+        tv_alter_password.setOnClickListener {
+            val intent = Intent(context, AlterPasswordActivity::class.java)
+            startActivity(intent)
+        }
+
         // 注销操作
         val tv_logout = root.findViewById<TextView>(R.id.tv_logout)
         tv_logout.setOnClickListener {
-            val popwindow_logout = LayoutInflater.from(context).inflate(R.layout.popwindow_logout, null)
+            val popwindow_logout =
+                LayoutInflater.from(context).inflate(R.layout.popwindow_logout, null)
             val popupWindow = PopupWindow(
                 popwindow_logout,
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -59,7 +71,8 @@ class MineFragment : androidx.fragment.app.Fragment() {
             popupWindow.isTouchable = true
 
             // 处理弹窗中按钮事件
-            val tv_make_sure_logout = popwindow_logout.findViewById<TextView>(R.id.tv_make_sure_logout)
+            val tv_make_sure_logout =
+                popwindow_logout.findViewById<TextView>(R.id.tv_make_sure_logout)
             val tv_cancel = popwindow_logout.findViewById<TextView>(R.id.tv_cancel)
 
             tv_cancel.setOnClickListener {
@@ -72,16 +85,58 @@ class MineFragment : androidx.fragment.app.Fragment() {
             }
         }
 
+
         return root
     }
 
     private fun init() {
-        mineList.add(Mine("用户名"))
-        mineList.add(Mine("昵称"))
-        mineList.add(Mine("性别"))
-        mineList.add(Mine("年龄"))
-        mineList.add(Mine("身高"))
-        mineList.add(Mine("体重"))
+        val userInformation = activity?.getApplication() as UserInformation
+        val account = userInformation.account
+        mineList.add(Mine("用户名", account))
+        val sql =
+            "SELECT userName, nickName, sex, age, high, weight FROM user WHERE userName = $account"
+        Thread(
+            Runnable {
+                try {
+                    Class.forName("com.mysql.jdbc.Driver")
+                    val connection = DriverManager.getConnection(
+                        "jdbc:mysql://192.168.220.1:3306/health?useSSL=false&allowPublicKeyRetrieval=true",
+                        "root", "666666"
+                    )
+                    val statement = connection.createStatement()
+                    val resultSet = statement.executeQuery(sql)
+                    while (resultSet.next()) {
+                        mineList.add(Mine("昵称", resultSet.getString("nickName")))
+                        if (resultSet.getInt("sex") == 0) {
+                            mineList.add(Mine("性别", "女"))
+                        } else {
+                            mineList.add(Mine("性别", "男"))
+                        }
+                        if (resultSet.getInt("age") != 0) {
+                            mineList.add(Mine("年龄", resultSet.getInt("age").toString()))
+                        } else {
+                            mineList.add(Mine("年龄", ""))
+                        }
+                        if (resultSet.getFloat("high") != 0.0f) {
+                            mineList.add(Mine("身高", resultSet.getFloat("high").toString()))
+                        } else {
+                            mineList.add(Mine("身高", ""))
+                        }
+                        if (resultSet.getDouble("weight") != 0.0) {
+                            mineList.add(Mine("体重", resultSet.getDouble("weight").toString()))
+                        } else {
+                            mineList.add(Mine("体重", ""))
+                        }
+                    }
+                    resultSet?.close()
+                    statement?.close()
+                    connection?.close()
+                } catch (e: ClassNotFoundException) {
+                    e.printStackTrace()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }).start()
     }
 
     override fun onResume() {

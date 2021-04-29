@@ -6,16 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.healthanalyzers.R
-import com.gyf.immersionbar.ktx.immersionBar
 
 class KnowledgeFragment : Fragment() {
 
     private lateinit var knowledgeViewModel: KnowledgeViewModel
+    private lateinit var webView: WebView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,19 +27,33 @@ class KnowledgeFragment : Fragment() {
 //        knowledgeViewModel.text.observe(viewLifecycleOwner, Observer {
 //            textView.text = it
 //        })
-        val webView = root.findViewById<WebView>(R.id.webView)
+        webView = root.findViewById<WebView>(R.id.webView)
         webView.settings.javaScriptEnabled = true
         webView.webViewClient = WebViewClient()
-        // webView.loadUrl("http://www.kepuchina.cn/health/")
-        webView.loadUrl("http://www.baidu.com")
+        webView.loadUrl("https://www.kepuchina.cn/health/")
+        // webView.loadUrl("http://www.baidu.com")
+
         return root
     }
 
     override fun onResume() {
         super.onResume()
-        immersionBar {
-            statusBarColor(R.color.actionbar_color)
-            fitsSystemWindows(true)
-        }
+//        immersionBar {
+//            statusBarColor(R.color.actionbar_color)
+//            fitsSystemWindows(true)
+//        }
+
+
     }
+
+//    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+//        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
+//            webView.goBack()
+//            return true
+//        }
+//        return false
+//    }
+
+
+
 }

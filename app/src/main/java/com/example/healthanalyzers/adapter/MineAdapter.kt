@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.healthanalyzers.R
 import com.example.healthanalyzers.bean.Mine
 import com.example.healthanalyzers.ui.mine.AlterNicknameActivity
-import com.example.healthanalyzers.ui.mine.AlterUsernameActivity
 
 class MineAdapter(val mineList: List<Mine>) : RecyclerView.Adapter<MineAdapter.ViewHolder>() {
 
@@ -28,16 +27,10 @@ class MineAdapter(val mineList: List<Mine>) : RecyclerView.Adapter<MineAdapter.V
             val position = viewHolder.adapterPosition
             val mine = mineList[position]
             // Toast.makeText(parent.context, "你点击了${mine.optionName}", Toast.LENGTH_SHORT).show()
-            when(position) {
-                // 用户名选项
-                0 -> {
-                    // Toast.makeText(parent.context, "你点击了第一个", Toast.LENGTH_SHORT).show()
-                    val intent =Intent(parent.context, AlterUsernameActivity::class.java)
-                    parent.context.startActivity(intent)
-                }
+            when (position) {
                 // 昵称
                 1 -> {
-                    val intent =Intent(parent.context, AlterNicknameActivity::class.java)
+                    val intent = Intent(parent.context, AlterNicknameActivity::class.java)
                     parent.context.startActivity(intent)
                 }
                 // 性别
@@ -48,7 +41,14 @@ class MineAdapter(val mineList: List<Mine>) : RecyclerView.Adapter<MineAdapter.V
                 3 -> {
 
                 }
-                else -> {}
+                // 身高
+                4 -> {
+                }
+                // 体重
+                5 -> {
+                }
+                else -> {
+                }
             }
         }
 
@@ -60,5 +60,6 @@ class MineAdapter(val mineList: List<Mine>) : RecyclerView.Adapter<MineAdapter.V
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val mine = mineList[position]
         holder.tv_option.text = mine.optionName
+        holder.tv_information.text = mine.value
     }
 }

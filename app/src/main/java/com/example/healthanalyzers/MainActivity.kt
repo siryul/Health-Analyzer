@@ -2,13 +2,13 @@ package com.example.healthanalyzers
 
 import android.os.Bundle
 import android.util.Log
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.healthanalyzers.ui.mine.MineFragment
+import com.example.healthanalyzers.data.UserInformation
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,5 +30,22 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        val userInformation = getApplication() as UserInformation
+        intent.getStringExtra("account")?.let {
+            Log.d("MainActivity", "获取的登录账号为：$it")
+//            val fragment = fragmentManager
+//            val fragmentTransaction = fragment.beginTransaction()
+//            val fragmentMineFragment = MineFragment()
+//            val bundle = Bundle()
+//            bundle.putString("account", it)
+//            fragmentMineFragment.arguments = bundle
+//            fragmentTransaction.commit()
+
+            userInformation.account = it
+        }
+        intent.getStringExtra("password")?.let {
+            userInformation.password = it
+        }
     }
 }
