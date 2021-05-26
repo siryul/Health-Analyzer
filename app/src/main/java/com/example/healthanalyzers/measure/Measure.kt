@@ -1,8 +1,10 @@
-package com.example.healthanalyzers.Measure
+package com.example.healthanalyzers.measure
 
 import kotlin.random.Random
 
 public class Measure {
+
+    private var high: Int = 0
 
     fun getHeartRate(): Int {
         // 以一个95%概率获得一个正常值，5%概率获得一个不正常的值
@@ -19,11 +21,19 @@ public class Measure {
         }
     }
 
-    fun getWeight():Int {
+    fun getWeight(): Int {
         return (20..80).random()
     }
 
-    fun getHigh() = (50..230).random()
+    fun getHigh():Int {
+        // 为了更加真实的模拟，避免随着时间的推移升高呈现上下不定的状态
+        if (high == 0) {
+            high = (50..210).random()
+        } else {
+            high += (0..3).random()
+        }
+        return high
+    }
 
     fun getBodyFat(): Float {
         // 成年人的体脂率正常范围分别是女性20%～25%，男性15%～18%

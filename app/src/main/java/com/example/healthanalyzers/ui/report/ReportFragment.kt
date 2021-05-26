@@ -29,8 +29,8 @@ class ReportFragment : Fragment() {
 
         val daily= root.findViewById<CardView>(R.id.daily)
         val weekly= root.findViewById<CardView>(R.id.weekly)
-        val monthly= root.findViewById<CardView>(R.id.monthly)
-        val yearly= root.findViewById<CardView>(R.id.yearly)
+       // val monthly= root.findViewById<CardView>(R.id.monthly)
+        // val yearly= root.findViewById<CardView>(R.id.yearly)
 
         daily.setOnClickListener {
             // 转到日报
@@ -44,17 +44,21 @@ class ReportFragment : Fragment() {
             startActivity(intent)
         }
 
-        monthly.setOnClickListener {
-            // 转到月报
-            val intent = Intent(context, MonthlyReportActivity::class.java)
-            startActivity(intent)
+        /**
+         * monthly.setOnClickListener {
+        // 转到月报
+        val intent = Intent(context, MonthlyReportActivity::class.java)
+        startActivity(intent)
         }
-
         yearly.setOnClickListener {
-            // 转到年报
-            val intent = Intent(context, YearlyReportActivity::class.java)
-            startActivity(intent)
+        // 转到年报
+        val intent = Intent(context, YearlyReportActivity::class.java)
+        startActivity(intent)
         }
+         */
+
+
+
 
 
 

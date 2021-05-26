@@ -17,4 +17,6 @@
     <color name="background">#fff2f3f5</color>
     <color name="actionbar_color">#0f7ef6</color>
     <color name="hint_text_color">#ff919191</color>
+
+    <color name="line_chart_fill_color">#68f1af</color>
 </resources>

@@ -94,7 +94,7 @@ class MineFragment : androidx.fragment.app.Fragment() {
         val account = userInformation.account
         mineList.add(Mine("用户名", account))
         val sql =
-            "SELECT userName, nickName, sex, age, high, weight FROM user WHERE userName = $account"
+            "SELECT userName, nickName, sex, age FROM user WHERE userName = $account"
         Thread(
             Runnable {
                 try {

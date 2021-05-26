@@ -1,5 +1,6 @@
 package com.example.healthanalyzers.ui.knowledge
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ class KnowledgeFragment : Fragment() {
     private lateinit var knowledgeViewModel: KnowledgeViewModel
     private lateinit var webView: WebView
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,11 +29,11 @@ class KnowledgeFragment : Fragment() {
 //        knowledgeViewModel.text.observe(viewLifecycleOwner, Observer {
 //            textView.text = it
 //        })
-        webView = root.findViewById<WebView>(R.id.webView)
+        webView = root.findViewById(R.id.webView)
         webView.settings.javaScriptEnabled = true
         webView.webViewClient = WebViewClient()
         webView.loadUrl("https://www.kepuchina.cn/health/")
-        // webView.loadUrl("http://www.baidu.com")
+
 
         return root
     }

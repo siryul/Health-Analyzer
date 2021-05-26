@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
-import com.example.healthanalyzers.Measure.Measure
 import com.example.healthanalyzers.R
 import com.example.healthanalyzers.bean.Func
+import com.example.healthanalyzers.measure.Measure
 import com.example.healthanalyzers.utils.DBUtils
 import es.dmoral.toasty.Toasty
 import java.sql.Timestamp
@@ -44,6 +45,7 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
                     val sql =
                         "INSERT INTO heartrate (userName, time, heartRate) VALUES (?, ?, ?)"
                     println(time)
+                    val value = Measure().getHeartRate()
                     // 获得数据库连接
                     Thread(
                         Runnable {
@@ -54,12 +56,19 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
 
                             preparedStatement.setObject(1, account.toInt())
                             preparedStatement.setObject(2, time)
-                            preparedStatement.setObject(3, Measure().getHeartRate())
+                            preparedStatement.setObject(3, value)
 
                             preparedStatement.executeUpdate()
 
                             DBUtils.close(connection, statement)
                         }).start()
+                    AlertDialog.Builder(parent.context).apply {
+                        setTitle("心率检测结果")
+                        setMessage("本次检测结果：${value}次/分")
+                        setCancelable(false)
+                        setPositiveButton("确定") { _, _ -> }
+                        show()
+                    }
                     Log.d("FuncAdapter", "测量时间为：$time")
                 }
                 // 睡眠
@@ -70,7 +79,7 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
                     val sql =
                         "INSERT INTO sleepquality (userName, time, quality) VALUES (?, ?, ?)"
                     // println(time)
-
+                    val value = Measure().getPsySleepQuality()
                     Thread(
                         Runnable {
                             // 获得数据库连接
@@ -81,12 +90,19 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
 
                             preparedStatement.setObject(1, account.toInt())
                             preparedStatement.setObject(2, time)
-                            preparedStatement.setObject(3, Measure().getPsySleepQuality())
+                            preparedStatement.setObject(3, value)
 
                             preparedStatement.executeUpdate()
 
                             DBUtils.close(connection, statement)
                         }).start()
+                    AlertDialog.Builder(parent.context).apply {
+                        setTitle("睡眠质量检测结果")
+                        setMessage("本次检测结果：${value}时")
+                        setCancelable(false)
+                        setPositiveButton("确定") { _, _ -> }
+                        show()
+                    }
                 }
                 // 身高
                 2 -> {
@@ -123,6 +139,8 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
                         "INSERT INTO bloodoxygen (userName, time, ArterialBloodOxygen, VenousBloodOxygen) VALUES (?, ?, ?, ?)"
                     // println(time)
                     // 获得数据库连接
+                    val arterial = Measure().getArterialBloodOxygen()
+                    val venous = Measure().getVenousBloodOxygen()
                     Thread(
                         Runnable {
                             val connection = DBUtils.getConnection()
@@ -132,14 +150,20 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
 
                             preparedStatement.setObject(1, account.toInt())
                             preparedStatement.setObject(2, time)
-                            preparedStatement.setObject(3, Measure().getArterialBloodOxygen())
-                            preparedStatement.setObject(4, Measure().getVenousBloodOxygen())
+                            preparedStatement.setObject(3, arterial)
+                            preparedStatement.setObject(4, venous)
 
                             preparedStatement.executeUpdate()
 
                             DBUtils.close(connection, statement)
                         }).start()
-
+                    AlertDialog.Builder(parent.context).apply {
+                        setTitle("血氧量检测结果")
+                        setMessage("动脉血氧量：${arterial}mL/L\n静脉血氧量：${venous}mL/L")
+                        setCancelable(false)
+                        setPositiveButton("确定") { _, _ -> }
+                        show()
+                    }
                 }
                 // 血压
                 4 -> {
