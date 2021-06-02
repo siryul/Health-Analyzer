@@ -67,5 +67,9 @@
     <string name="monthly">月报</string>
     <string name="yearly">年报</string>
     <string name="daily">日报</string>
+    <string name="addDevices">添加设备</string>
+    <string name="watch">手表/环</string>
+    <string name="bloodGlucoseMeter">血糖仪</string>
+    <string name="body_weight_device">称</string>
 
 </resources>

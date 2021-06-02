@@ -48,14 +48,4 @@ class KnowledgeFragment : Fragment() {
 
     }
 
-//    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-//        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
-//            webView.goBack()
-//            return true
-//        }
-//        return false
-//    }
-
-
-
 }

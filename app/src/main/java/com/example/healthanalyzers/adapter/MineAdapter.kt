@@ -28,6 +28,10 @@ class MineAdapter(val mineList: List<Mine>) : RecyclerView.Adapter<MineAdapter.V
             val mine = mineList[position]
             // Toast.makeText(parent.context, "你点击了${mine.optionName}", Toast.LENGTH_SHORT).show()
             when (position) {
+                // 用户名
+                0 -> {
+
+                }
                 // 昵称
                 1 -> {
                     val intent = Intent(parent.context, AlterNicknameActivity::class.java)

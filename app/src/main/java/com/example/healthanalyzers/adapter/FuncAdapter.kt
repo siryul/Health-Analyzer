@@ -173,6 +173,8 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
                     val sql =
                         "INSERT INTO bloodpressure (userName, time, systolicPressure, diastolicPressure) VALUES (?, ?, ?, ?)"
                     // println(time)
+                    var systolic = Measure().getSystolicPressure()
+                    var diastolic = Measure().getDiastolicPressure()
                     // 获得数据库连接
                     Thread(
                         Runnable {
@@ -183,13 +185,20 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
 
                             preparedStatement.setObject(1, account.toInt())
                             preparedStatement.setObject(2, time)
-                            preparedStatement.setObject(3, Measure().getSystolicPressure())
-                            preparedStatement.setObject(4, Measure().getDiastolicPressure())
+                            preparedStatement.setObject(3, systolic)
+                            preparedStatement.setObject(4, diastolic)
 
                             preparedStatement.executeUpdate()
 
                             DBUtils.close(connection, statement)
                         }).start()
+                    AlertDialog.Builder(parent.context).apply {
+                        setTitle("血压测量结果")
+                        setMessage("收缩压：$systolic mmHg\n 舒张压：$diastolic mmHg")
+                        setPositiveButton("确认") { _, _ -> }
+                        setCancelable(false)
+                        show()
+                    }
                 }
                 // 血糖
                 5 -> {
@@ -199,6 +208,7 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
                     val sql =
                         "INSERT INTO bloodsugar (userName, time, bloodSugar) VALUES (?, ?, ?)"
                     // println(time)
+                    val bloodSugar = Measure().getBloodSugar()
                     // 获得数据库连接
                     Thread(
                         Runnable {
@@ -209,12 +219,19 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
 
                             preparedStatement.setObject(1, account.toInt())
                             preparedStatement.setObject(2, time)
-                            preparedStatement.setObject(3, Measure().getBloodSugar())
+                            preparedStatement.setObject(3, bloodSugar)
 
                             preparedStatement.executeUpdate()
 
                             DBUtils.close(connection, statement)
                         }).start()
+                    AlertDialog.Builder(parent.context).apply {
+                        setTitle("血糖测量结果")
+                        setMessage("血糖为：$bloodSugar mmol/L")
+                        setCancelable(false)
+                        setPositiveButton("确认") { _, _ -> }
+                        show()
+                    }
                 }
                 // 体重
                 6 -> {
@@ -224,6 +241,7 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
                     val sql =
                         "INSERT INTO weight (userName, time, weight) VALUES (?, ?, ?)"
                     // println(time)
+                    val weight = Measure().getWeight()
                     // 获得数据库连接
                     Thread(
                         Runnable {
@@ -234,12 +252,19 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
 
                             preparedStatement.setObject(1, account.toInt())
                             preparedStatement.setObject(2, time)
-                            preparedStatement.setObject(3, Measure().getWeight())
+                            preparedStatement.setObject(3, weight)
 
                             preparedStatement.executeUpdate()
 
                             DBUtils.close(connection, statement)
                         }).start()
+                    AlertDialog.Builder(parent.context).apply {
+                        setTitle("体重测量结果")
+                        setMessage("体重为：$weight kg")
+                        setCancelable(false)
+                        setPositiveButton("确认") { _, _ -> }
+                        show()
+                    }
                 }
                 // 体温
                 7 -> {
@@ -249,7 +274,7 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
                     val sql =
                         "INSERT INTO bodytemperature (userName, time, temperature) VALUES (?, ?, ?)"
                     // println(time)
-
+                    val temperature = Measure().getTemperature()
                     Thread(
                         Runnable {
                             // 获得数据库连接
@@ -260,12 +285,19 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
 
                             preparedStatement.setObject(1, account.toInt())
                             preparedStatement.setObject(2, time)
-                            preparedStatement.setObject(3, Measure().getTemperature())
+                            preparedStatement.setObject(3, temperature)
 
                             preparedStatement.executeUpdate()
 
                             DBUtils.close(connection, statement)
                         }).start()
+                    AlertDialog.Builder(parent.context).apply {
+                        setTitle("体温测量结果")
+                        setMessage("体温为：$temperature ℃")
+                        setCancelable(false)
+                        setPositiveButton("确认") { _, _ -> }
+                        show()
+                    }
                 }
                 else -> {
                     Log.d("FuncAdapter", "点击事件出错")
@@ -292,5 +324,4 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
         holder.funcImage.setImageResource(func.imageId)
         holder.funcName.text = func.name
     }
-
 }

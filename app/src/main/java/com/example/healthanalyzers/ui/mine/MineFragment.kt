@@ -16,9 +16,9 @@ import com.example.healthanalyzers.R
 import com.example.healthanalyzers.adapter.MineAdapter
 import com.example.healthanalyzers.bean.Mine
 import com.example.healthanalyzers.data.UserInformation
+import com.example.healthanalyzers.utils.DBUtils
 import com.gyf.immersionbar.ktx.immersionBar
 import java.io.IOException
-import java.sql.DriverManager
 
 
 class MineFragment : androidx.fragment.app.Fragment() {
@@ -93,18 +93,23 @@ class MineFragment : androidx.fragment.app.Fragment() {
         val userInformation = activity?.getApplication() as UserInformation
         val account = userInformation.account
         mineList.add(Mine("用户名", account))
-        val sql =
+        var sql =
             "SELECT userName, nickName, sex, age FROM user WHERE userName = $account"
         Thread(
             Runnable {
                 try {
-                    Class.forName("com.mysql.jdbc.Driver")
-                    val connection = DriverManager.getConnection(
-                        "jdbc:mysql://192.168.220.1:3306/health?useSSL=false&allowPublicKeyRetrieval=true",
-                        "root", "666666"
-                    )
+                    // Class.forName("com.mysql.jdbc.Driver")
+                    // val connection = DriverManager.getConnection(
+                    //     "jdbc:mysql://192.168.220.1:3306/health?useSSL=false&allowPublicKeyRetrieval=true",
+                    //     "root", "666666"
+                    // )
+                    // val statement = connection.createStatement()
+                    // val resultSet = statement.executeQuery(sql)
+
+                    val connection = DBUtils.getConnection()
                     val statement = connection.createStatement()
-                    val resultSet = statement.executeQuery(sql)
+                    var resultSet = statement.executeQuery(sql)
+
                     while (resultSet.next()) {
                         mineList.add(Mine("昵称", resultSet.getString("nickName")))
                         if (resultSet.getInt("sex") == 0) {
@@ -117,20 +122,24 @@ class MineFragment : androidx.fragment.app.Fragment() {
                         } else {
                             mineList.add(Mine("年龄", ""))
                         }
-                        if (resultSet.getFloat("high") != 0.0f) {
-                            mineList.add(Mine("身高", resultSet.getFloat("high").toString()))
-                        } else {
-                            mineList.add(Mine("身高", ""))
-                        }
-                        if (resultSet.getDouble("weight") != 0.0) {
-                            mineList.add(Mine("体重", resultSet.getDouble("weight").toString()))
-                        } else {
-                            mineList.add(Mine("体重", ""))
-                        }
                     }
-                    resultSet?.close()
-                    statement?.close()
-                    connection?.close()
+                    sql =
+                        "SELECT high FROM high WHERE userName = $account && time = (SELECT time FROM high ORDER BY time ASC LIMIT 1)"
+                    resultSet = statement.executeQuery(sql)
+                    if (resultSet.next() && resultSet.getFloat("high") != 0.0f) {
+                        mineList.add(Mine("身高", resultSet.getFloat("high").toString()))
+                    } else {
+                        mineList.add(Mine("身高", ""))
+                    }
+                    sql =
+                        "SELECT weight FROM weight WHERE userName = $account && time = (SELECT time FROM weight ORDER BY time ASC LIMIT 1)"
+                    resultSet = statement.executeQuery(sql)
+                    if (resultSet.next() && resultSet.getDouble("weight") != 0.0) {
+                        mineList.add(Mine("体重", resultSet.getDouble("weight").toString()))
+                    } else {
+                        mineList.add(Mine("体重", ""))
+                    }
+                    DBUtils.close(connection, statement, resultSet)
                 } catch (e: ClassNotFoundException) {
                     e.printStackTrace()
                 } catch (e: IOException) {

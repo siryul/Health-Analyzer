@@ -40,6 +40,7 @@ class ReportAdapter(
         val selectDate: TextView = view.findViewById(R.id.selectDate)
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.report_item, parent, false)
         val viewHolder = ViewHolder(view)

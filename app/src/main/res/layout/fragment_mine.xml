@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:fillViewport="true"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_me"
@@ -39,18 +39,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="40dp"
             android:layout_marginRight="10dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="0dp"
-            android:layout_marginTop="40dp"
             app:layout_constraintTop_toBottomOf="@+id/avatar">
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_me"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:descendantFocusability="blocksDescendants"
                 android:overScrollMode="never"
                 tools:listitem="@layout/me_item" />
+
         </androidx.cardview.widget.CardView>
 
         <!--alter password-->

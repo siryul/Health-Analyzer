@@ -15,20 +15,25 @@ class DevicesAdapter(val context: Context, val devicesList: List<Devices>) :
     RecyclerView.Adapter<DevicesAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val image_device = view.findViewById<ImageView>(R.id.image_device)
-        val tv_device_name = view.findViewById<TextView>(R.id.tv_device_name)
+        val imageDevice: ImageView = view.findViewById(R.id.image_device)
+        val tvDeviceName: TextView = view.findViewById(R.id.tv_device_name)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.device_item, parent, false)
-
-        return ViewHolder(view)
+        val  viewHolder = ViewHolder(view)
+        viewHolder.itemView.setOnClickListener {
+            when (viewHolder.adapterPosition) {
+                // 所要实现的删除设备的代码
+            }
+        }
+        return viewHolder
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val device = devicesList[position]
-        holder.tv_device_name.text = device.name
-        Glide.with(context).load(device.imageId).into(holder.image_device)
+        holder.tvDeviceName.text = device.name
+        Glide.with(context).load(device.imageId).into(holder.imageDevice)
     }
 
     override fun getItemCount() = devicesList.size ?: 0
