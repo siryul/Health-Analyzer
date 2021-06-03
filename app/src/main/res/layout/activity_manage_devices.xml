@@ -30,12 +30,24 @@
             android:textSize="20sp" />
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_device"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        tools:listitem="@layout/device_item" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_device"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            tools:listitem="@layout/device_item" />
+
+    </androidx.cardview.widget.CardView>
 
     <com.nambimobile.widgets.efab.ExpandableFabLayout
         android:layout_width="match_parent"
@@ -45,66 +57,75 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
+            android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             app:efab_color="@color/actionbar_color" />
+
         <com.nambimobile.widgets.efab.FabOption
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_color="@color/Indigo"
             android:onClick="addHeightMeter"
+            app:fab_color="@color/Indigo"
             app:fab_icon="@drawable/ic_high_24dp"
             app:label_text="@string/height_meter" />
+
         <com.nambimobile.widgets.efab.FabOption
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_color="@color/Indigo"
             android:onClick="addWatch"
+            app:fab_color="@color/Indigo"
             app:fab_icon="@drawable/ic_watch_24dp"
             app:label_text="@string/watch" />
+
         <com.nambimobile.widgets.efab.FabOption
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_color="@color/Indigo"
             android:onClick="addThermometer"
+            app:fab_color="@color/Indigo"
             app:fab_icon="@drawable/ic_thermometer_24dp"
             app:label_text="@string/thermometer" />
+
         <com.nambimobile.widgets.efab.FabOption
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_color="@color/Indigo"
             android:onClick="addHeartRateDevice"
+            app:fab_color="@color/Indigo"
             app:fab_icon="@drawable/ic_heart_rate_24dp"
             app:label_text="@string/heart_rate_device" />
+
         <com.nambimobile.widgets.efab.FabOption
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_color="@color/Indigo"
             android:onClick="addOximeter"
+            app:fab_color="@color/Indigo"
             app:fab_icon="@drawable/ic_blood_oxygen_24dp"
             app:label_text="@string/oximeter" />
+
         <com.nambimobile.widgets.efab.FabOption
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_color="@color/Indigo"
             android:onClick="addSphygmomanometer"
+            app:fab_color="@color/Indigo"
             app:fab_icon="@drawable/ic_blood_pressure_24dp"
             app:label_text="@string/sphygmomanometer" />
+
         <com.nambimobile.widgets.efab.FabOption
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_color="@color/Indigo"
             android:onClick="addBloodGlucoseMeter"
+            app:fab_color="@color/Indigo"
             app:fab_icon="@drawable/ic_blood_suger_24dp"
             app:label_text="@string/bloodGlucoseMeter" />
+
         <com.nambimobile.widgets.efab.FabOption
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_color="@color/Indigo"
             android:onClick="addBodyFatScale"
+            app:fab_color="@color/Indigo"
             app:fab_icon="@drawable/ic_weight_24dp"
-            app:label_textColor="@color/white"
-            app:label_text="@string/body_fat_scale" />
+            app:label_text="@string/body_fat_scale"
+            app:label_textColor="@color/white" />
 
     </com.nambimobile.widgets.efab.ExpandableFabLayout>
 

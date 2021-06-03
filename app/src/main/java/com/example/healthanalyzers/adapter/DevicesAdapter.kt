@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.healthanalyzers.R
 import com.example.healthanalyzers.bean.Devices
 
-class DevicesAdapter(val context: Context, val devicesList: List<Devices>) :
+class DevicesAdapter(val context: Context, var devicesList: List<Devices>) :
     RecyclerView.Adapter<DevicesAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -23,9 +23,7 @@ class DevicesAdapter(val context: Context, val devicesList: List<Devices>) :
         val view = LayoutInflater.from(context).inflate(R.layout.device_item, parent, false)
         val  viewHolder = ViewHolder(view)
         viewHolder.itemView.setOnClickListener {
-            when (viewHolder.adapterPosition) {
-                // 所要实现的删除设备的代码
-            }
+
         }
         return viewHolder
     }

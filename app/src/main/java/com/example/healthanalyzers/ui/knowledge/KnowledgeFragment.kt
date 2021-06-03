@@ -1,7 +1,9 @@
 package com.example.healthanalyzers.ui.knowledge
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +33,21 @@ class KnowledgeFragment : Fragment() {
 //        })
         webView = root.findViewById(R.id.webView)
         webView.settings.javaScriptEnabled = true
-        webView.webViewClient = WebViewClient()
+        var mIsRedirect: Boolean = false //用来标识链接是否重定向
+        webView.webViewClient = object : WebViewClient() {
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                super.onPageStarted(view, url, favicon)
+                // Page loading started
+                // Do something
+            }
+
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                // Page loading finished
+                // Enable disable back forward button
+            }
+
+        }
         webView.loadUrl("https://www.kepuchina.cn/health/")
 
 
@@ -48,4 +64,16 @@ class KnowledgeFragment : Fragment() {
 
     }
 
+
+
+     fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        // Check if the key event was the Back button and if there's history
+        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
+            webView.goBack()
+            return true
+        }
+        // If it wasn't the Back key or there's no web page history, bubble up to the default
+        // system behavior (probably exit the activity)
+        return true
+    }
 }

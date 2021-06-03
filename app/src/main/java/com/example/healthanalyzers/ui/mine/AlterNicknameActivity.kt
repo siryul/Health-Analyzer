@@ -36,31 +36,34 @@ class AlterNicknameActivity : AppCompatActivity() {
 
         val image_btn_back = findViewById<ImageButton>(R.id.image_btn_back)
         image_btn_back.setOnClickListener {
-            // 将最后的结果存回数据库
-            val userInformation = getApplication() as UserInformation
-            thread {
-                val sql =
-                    "UPDATE user SET nickName = \'$resultNickname\' WHERE userName = ${userInformation.account}"
-                try {
-                    Class.forName("com.mysql.jdbc.Driver")
-                    val connection = DriverManager.getConnection(
-                        "jdbc:mysql://192.168.220.1:3306/health?useSSL=false&allowPublicKeyRetrieval=true",
-                        "root", "666666"
-                    )
-                    val statement = connection.createStatement()
-                    statement.executeUpdate(sql)
+            if (resultNickname != null) {
+                // 将最后的结果存回数据库
+                val userInformation = getApplication() as UserInformation
+                thread {
+                    val sql =
+                        "UPDATE user SET nickName = \'$resultNickname\' WHERE userName = ${userInformation.account}"
+                    try {
+                        Class.forName("com.mysql.jdbc.Driver")
+                        val connection = DriverManager.getConnection(
+                            "jdbc:mysql://192.168.220.1:3306/health?useSSL=false&allowPublicKeyRetrieval=true",
+                            "root", "666666"
+                        )
+                        val statement = connection.createStatement()
+                        statement.executeUpdate(sql)
 
-                    statement.close()
-                    connection.close()
+                        statement.close()
+                        connection.close()
 
-                    finish()
-                } catch (e: ClassNotFoundException) {
-                    e.printStackTrace()
-                } catch (e: IOException) {
-                    e.printStackTrace()
+                        finish()
+                    } catch (e: ClassNotFoundException) {
+                        e.printStackTrace()
+                    } catch (e: IOException) {
+                        e.printStackTrace()
 
-                }
-            }.start()
+                    }
+                }.start()
+            }
+            finish()
         }
         supportActionBar?.hide()
     }

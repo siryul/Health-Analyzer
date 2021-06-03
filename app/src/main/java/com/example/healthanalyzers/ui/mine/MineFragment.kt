@@ -19,6 +19,7 @@ import com.example.healthanalyzers.data.UserInformation
 import com.example.healthanalyzers.utils.DBUtils
 import com.gyf.immersionbar.ktx.immersionBar
 import java.io.IOException
+import kotlin.concurrent.thread
 
 
 class MineFragment : androidx.fragment.app.Fragment() {
@@ -44,6 +45,7 @@ class MineFragment : androidx.fragment.app.Fragment() {
 //        tv_information = root.findViewById(R.id.tv_information)
         init()
         val layoutManager = LinearLayoutManager(context)
+        layoutManager.isAutoMeasureEnabled = true
         recyclerView.layoutManager = layoutManager
         val adapter = MineAdapter(mineList)
         recyclerView.adapter = adapter
@@ -81,7 +83,15 @@ class MineFragment : androidx.fragment.app.Fragment() {
 
             tv_make_sure_logout.setOnClickListener {
                 // 点击确认注销之后，注销数据库中账号信息，并跳转至登录页面
-
+                val userInformation = activity?.application as UserInformation
+                val account = userInformation.account
+                val sql = "DELETE FROM `user` WHERE userName = $account"
+                thread {
+                    val connection = DBUtils.getConnection()
+                    val statement = connection.createStatement()
+                    statement.executeUpdate(sql)
+                    DBUtils.close(connection, statement)
+                }
             }
         }
 

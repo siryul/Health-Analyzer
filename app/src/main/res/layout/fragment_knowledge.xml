@@ -7,7 +7,8 @@
     tools:context=".ui.knowledge.KnowledgeFragment">
 
     <WebView
+        android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/webView" />
+        android:scrollbars="none" />
 </androidx.constraintlayout.widget.ConstraintLayout>
