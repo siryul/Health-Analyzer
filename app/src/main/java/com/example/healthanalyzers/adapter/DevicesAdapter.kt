@@ -1,6 +1,7 @@
 package com.example.healthanalyzers.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +11,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.healthanalyzers.R
 import com.example.healthanalyzers.bean.Devices
+import com.example.healthanalyzers.utils.DBUtils
+import com.example.healthanalyzers.utils.MyItemTouchCallback
+import kotlin.concurrent.thread
 
-class DevicesAdapter(val context: Context, var devicesList: List<Devices>) :
-    RecyclerView.Adapter<DevicesAdapter.ViewHolder>() {
+class DevicesAdapter(
+    val context: Context,
+    private var devicesList: ArrayList<Devices>,
+    val account: Int
+) :
+    RecyclerView.Adapter<DevicesAdapter.ViewHolder>(), MyItemTouchCallback.ItemTouchResultCallback {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageDevice: ImageView = view.findViewById(R.id.image_device)
@@ -21,9 +29,13 @@ class DevicesAdapter(val context: Context, var devicesList: List<Devices>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.device_item, parent, false)
-        val  viewHolder = ViewHolder(view)
+        val viewHolder = ViewHolder(view)
         viewHolder.itemView.setOnClickListener {
 
+            Log.d(
+                "DevicesAdapter",
+                "position at recyclerView is ${viewHolder.adapterPosition}, and the content is ${devicesList[viewHolder.adapterPosition].name}"
+            )
         }
         return viewHolder
     }
@@ -35,4 +47,27 @@ class DevicesAdapter(val context: Context, var devicesList: List<Devices>) :
     }
 
     override fun getItemCount() = devicesList.size ?: 0
+
+    // 移动 item 所需要实现的方法
+    override fun onItemMove(startPosition: Int, endPosition: Int) {
+        TODO("Not yet implemented")
+    }
+
+    // 删除 item 所需要实现的方法
+    override fun onItemDelete(position: Int) {
+        val sql =
+            "DELETE FROM devices WHERE userName = $account && id = ${devicesList[position].id}"
+        devicesList.removeAt(position)
+        updateDateBase(sql)
+        notifyItemRemoved(position)
+    }
+
+    fun updateDateBase(sql: String) {
+        thread {
+            val connection = DBUtils.getConnection()
+            val statement = connection.createStatement()
+            statement.executeUpdate(sql)
+            DBUtils.close(connection, statement)
+        }
+    }
 }

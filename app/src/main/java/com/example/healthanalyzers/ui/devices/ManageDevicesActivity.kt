@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.healthanalyzers.R
@@ -11,6 +12,7 @@ import com.example.healthanalyzers.adapter.DevicesAdapter
 import com.example.healthanalyzers.bean.Devices
 import com.example.healthanalyzers.data.UserInformation
 import com.example.healthanalyzers.utils.DBUtils
+import com.example.healthanalyzers.utils.MyItemTouchCallback
 import kotlin.concurrent.thread
 
 class ManageDevicesActivity : AppCompatActivity() {
@@ -26,7 +28,8 @@ class ManageDevicesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_devices)
         supportActionBar?.hide()
-
+        val userInformation = this.application as UserInformation
+        userName = userInformation.account.toInt()
         // 初始化已拥有的设备
         initDevicesList()
 
@@ -34,8 +37,11 @@ class ManageDevicesActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         recyclerView = findViewById<RecyclerView>(R.id.recyclerView_device)
         recyclerView.layoutManager = layoutManager
-        val adapter = DevicesAdapter(this, devicesList)
+        val adapter = DevicesAdapter(this, devicesList, userName!!.toInt())
         recyclerView.adapter = adapter
+        val itemTouchCallback = MyItemTouchCallback(adapter)
+        val itemTouchHelper = ItemTouchHelper(itemTouchCallback)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
 
         // 返回上一页
         val image_btn_back = findViewById<ImageButton>(R.id.image_btn_back)
@@ -60,8 +66,6 @@ class ManageDevicesActivity : AppCompatActivity() {
     fun initDevicesList() {
         // 从数据库中查询已拥有的设备
         thread {
-            val userInformation = this.application as UserInformation
-            userName = userInformation.account.toInt()
             var sql = "SELECT id, `name`, type FROM `devices` WHERE userName = ${userName}"
             val connection = DBUtils.getConnection()
             val statement = connection.createStatement()
