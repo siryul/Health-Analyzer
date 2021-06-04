@@ -26,8 +26,7 @@ class ReportAdapter(
     val context: Context,
     private val lineDataList: ArrayList<CustomLineData>,
     val account: String
-) :
-    RecyclerView.Adapter<ReportAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<ReportAdapter.ViewHolder>() {
 
 
     private lateinit var dpd: DatePickerDialog
@@ -71,11 +70,24 @@ class ReportAdapter(
                 when (viewHolder.adapterPosition) {
                     // heartrate
                     0 -> {
-                        query(list, "heartrate", "heartrate", viewHolder.selectDate.text as String, viewHolder.chart)
+                        query(
+                            list,
+                            "heartrate",
+                            "heartrate",
+                            viewHolder.selectDate.text as String,
+                            viewHolder.chart
+                        )
+                        // notifyItemChanged(viewHolder.adapterPosition)
                     }
                     // sleepquality
                     1 -> {
-                        query(list, "quality", "sleepquality", viewHolder.selectDate.text as String, viewHolder.chart)
+                        query(
+                            list,
+                            "quality",
+                            "sleepquality",
+                            viewHolder.selectDate.text as String,
+                            viewHolder.chart
+                        )
                     }
                     // high
                     2 -> {
@@ -101,7 +113,6 @@ class ReportAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
         // 设置当前时间
         val time = Calendar.getInstance()
         val date =

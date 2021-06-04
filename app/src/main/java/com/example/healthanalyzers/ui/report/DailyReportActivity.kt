@@ -43,62 +43,56 @@ class DailyReportActivity : AppCompatActivity() {
         }
     }
 
+    // 初始化数据，尚未完成对具有两种数据的图表合并
     private fun initListData() {
         // 查询数据库检测的所有数据
-        // TODO
-
-
         val time = Calendar.getInstance()
         val date =
             "${time.get(Calendar.YEAR)}-${time.get(Calendar.MONTH) + 1}-${time.get(Calendar.DAY_OF_MONTH)}"
 
-        val list1 = ArrayList<Entry>()
+        val listOfheartRate = ArrayList<Entry>()
         // 根据查询的 今日 检测次数进行对 list 扩充
-        // list1.add(Entry(1f, 10f))
-        // list1.add(Entry(2f, 20f))
-        // list1.add(Entry(3f, 10f))
-        // list1.add(Entry(4f, 50f))
-        // for ()
-        addData(list1, "heartrate", "heartRate", date, userName)
-        chartDataList.add(CustomLineData(list1, "心率"))
+        addData(listOfheartRate, "heartrate", "heartRate", date, userName)
+        chartDataList.add(CustomLineData(listOfheartRate, "心率"))
 
-        val list2 = ArrayList<Entry>()
+        val listOfsleepQuality = ArrayList<Entry>()
         // 根据查询的 今日 检测次数进行对 list 扩充
-        // for ()
-        addData(list2, "sleepquality", "quality", date, userName)
-        chartDataList.add(CustomLineData(list2, "睡眠"))
+        addData(listOfsleepQuality, "sleepquality", "quality", date, userName)
+        chartDataList.add(CustomLineData(listOfsleepQuality, "睡眠"))
 
-        val list3 = ArrayList<Entry>()
+        val listOfHigh = ArrayList<Entry>()
         // 根据查询的 今日 检测次数进行对 list 扩充
-        // for ()
-        addData(list3, "high", "high", date, userName)
-        chartDataList.add(CustomLineData(list3, "身高"))
+        addData(listOfHigh, "high", "high", date, userName)
+        chartDataList.add(CustomLineData(listOfHigh, "身高"))
 
-        val list4 = ArrayList<Entry>()
+        val listOfBOA = ArrayList<Entry>()  // 动脉血氧量
+        val listOfBOS = ArrayList<Entry>()  // 静脉血氧量
         // 根据查询的 今日 检测次数进行对 list 扩充
-        // for ()
-        addData(list4, "bloodoxygen", "ArterialBloodOxygen", date, userName)
-        chartDataList.add(CustomLineData(list4, "血氧饱和度"))
+        addData(listOfBOA, listOfBOS, "bloodoxygen", "ArterialBloodOxygen, VenousBloodOxygen", date, userName)
+        chartDataList.add(CustomLineData(listOfBOA, "血氧饱和度"))
+        chartDataList.add(CustomLineData(listOfBOS, "血氧饱和度"))
 
-        val list5 = ArrayList<Entry>()
+        val listOfBPS = ArrayList<Entry>()  // 收缩压
+        val listOfBPD = ArrayList<Entry>()  // 舒张压
         // 根据查询的 今日 检测次数进行对 list 扩充
-        // for ()
-        chartDataList.add(CustomLineData(list5, "血压"))
+        addData(listOfBPS, listOfBPD, "bloodpressure", "systolicPressure, diastolicPressure", date, userName)
+        chartDataList.add(CustomLineData(listOfBPS, "血压"))
+        chartDataList.add(CustomLineData(listOfBPD, "血压"))
 
-        val list6 = ArrayList<Entry>()
+        val listOfBS = ArrayList<Entry>()
         // 根据查询的 今日 检测次数进行对 list 扩充
-        // for ()
-        chartDataList.add(CustomLineData(list6, "血糖"))
+        addData(listOfBS, "bloodsugar", "bloodSugar", date, userName)
+        chartDataList.add(CustomLineData(listOfBS, "血糖"))
 
-        val list7 = ArrayList<Entry>()
+        val listOfWeight = ArrayList<Entry>()
         // 根据查询的 今日 检测次数进行对 list 扩充
-        // for ()
-        chartDataList.add(CustomLineData(list7, "体重"))
+        addData(listOfWeight, "weight", "weight", date, userName)
+        chartDataList.add(CustomLineData(listOfWeight, "体重"))
 
-        val list8 = ArrayList<Entry>()
+        val listOfTemperature = ArrayList<Entry>()
         // 根据查询的 今日 检测次数进行对 list 扩充
-        // for ()
-        chartDataList.add(CustomLineData(list8, "体温"))
+        addData(listOfTemperature, "bodytemperature", "temperature", date, userName)
+        chartDataList.add(CustomLineData(listOfTemperature, "体温"))
     }
 
     /**
@@ -125,6 +119,32 @@ class DailyReportActivity : AppCompatActivity() {
             while (resultSet.next()) {
                 timeOnAxis = resultSet.getInt(1) + resultSet.getInt(2) / 60.0F
                 list.add(BarEntry(timeOnAxis, resultSet.getInt(3).toFloat()))
+            }
+            DBUtils.close(connection, statement, resultSet)
+        }
+    }
+
+    private fun addData(
+        list1: ArrayList<Entry>,
+        list2: ArrayList<Entry>,
+        table: String,
+        mainContent: String,
+        date: String,
+        account: String
+    ) {
+
+        Log.d("DailyReportActivity", date)
+        val sql =
+            "SELECT HOUR(time), MINUTE(time), $mainContent FROM $table WHERE DATE(time) = '$date' AND userName = $account;"
+        var timeOnAxis: Float
+        thread {
+            val connection = DBUtils.getConnection()
+            val statement = connection.createStatement()
+            val resultSet = statement.executeQuery(sql)
+            while (resultSet.next()) {
+                timeOnAxis = resultSet.getInt(1) + resultSet.getInt(2) / 60.0F
+                list1.add(BarEntry(timeOnAxis, resultSet.getInt(3).toFloat()))
+                list1.add(BarEntry(timeOnAxis, resultSet.getInt(4).toFloat()))
             }
             DBUtils.close(connection, statement, resultSet)
         }

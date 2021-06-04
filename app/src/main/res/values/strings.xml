@@ -71,5 +71,7 @@
     <string name="watch">手表/环</string>
     <string name="bloodGlucoseMeter">血糖仪</string>
     <string name="body_weight_device">称</string>
+    <string name="summary_report">总结报告</string>
+    <string name="give_advices">给出建议</string>
 
 </resources>
