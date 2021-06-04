@@ -1,19 +1,20 @@
 package com.example.healthanalyzers.adapter
 
+import android.annotation.SuppressLint
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.example.healthanalyzers.R
 import com.example.healthanalyzers.bean.Func
 import com.example.healthanalyzers.measure.Measure
 import com.example.healthanalyzers.utils.DBUtils
-import es.dmoral.toasty.Toasty
+import com.google.android.material.internal.ContextUtils.getActivity
+import com.thecode.aestheticdialogs.*
 import java.sql.Timestamp
 import java.util.*
 
@@ -30,6 +31,7 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
         val funcName: TextView = view.findViewById(R.id.funcName)
     }
 
+    @SuppressLint("RestrictedApi")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.func_item, parent, false)
@@ -62,12 +64,18 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
 
                             DBUtils.close(connection, statement)
                         }).start()
-                    AlertDialog.Builder(parent.context).apply {
-                        setTitle("心率检测结果")
-                        setMessage("本次检测结果：${value}次/分")
-                        setCancelable(false)
-                        setPositiveButton("确定") { _, _ -> }
-                        show()
+                    getActivity(parent.context)?.let { it1 ->
+                        AestheticDialog.Builder(it1, DialogStyle.RAINBOW, DialogType.SUCCESS)
+                            .setTitle("心率检测结果")
+                            .setMessage("心率：${value}次/分")
+                            .setCancelable(false)
+                            .setAnimation(DialogAnimation.SLIDE_DOWN)
+                            .setGravity(Gravity.CENTER)
+                            .setOnClickListener(object : OnDialogClickListener {
+                                override fun onClick(dialog: AestheticDialog.Builder) {
+                                    dialog.dismiss()
+                                }
+                            }).show()
                     }
                     Log.d("FuncAdapter", "测量时间为：$time")
                 }
@@ -96,12 +104,18 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
 
                             DBUtils.close(connection, statement)
                         }).start()
-                    AlertDialog.Builder(parent.context).apply {
-                        setTitle("睡眠质量检测结果")
-                        setMessage("本次检测结果：${value}时")
-                        setCancelable(false)
-                        setPositiveButton("确定") { _, _ -> }
-                        show()
+                    getActivity(parent.context)?.let { it1 ->
+                        AestheticDialog.Builder(it1, DialogStyle.RAINBOW, DialogType.SUCCESS)
+                            .setTitle("睡眠质量检测结果")
+                            .setMessage("睡眠时间：${value}时")
+                            .setCancelable(false)
+                            .setAnimation(DialogAnimation.SLIDE_DOWN)
+                            .setGravity(Gravity.CENTER)
+                            .setOnClickListener(object : OnDialogClickListener {
+                                override fun onClick(dialog: AestheticDialog.Builder) {
+                                    dialog.dismiss()
+                                }
+                            }).show()
                     }
                 }
                 // 身高
@@ -112,7 +126,7 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
                     val sql =
                         "INSERT INTO high (userName, time, high) VALUES (?, ?, ?)"
                     // println(time)
-
+                    val value = Measure().getHigh()
                     Thread(
                         Runnable {
                             // 获得数据库连接
@@ -123,12 +137,25 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
 
                             preparedStatement.setObject(1, account.toInt())
                             preparedStatement.setObject(2, time)
-                            preparedStatement.setObject(3, Measure().getHigh())
+                            preparedStatement.setObject(3, value)
 
                             preparedStatement.executeUpdate()
 
                             DBUtils.close(connection, statement)
                         }).start()
+                    getActivity(parent.context)?.let { it1 ->
+                        AestheticDialog.Builder(it1, DialogStyle.RAINBOW, DialogType.SUCCESS)
+                            .setTitle("身高测量结果")
+                            .setMessage("身高：$value cm")
+                            .setCancelable(false)
+                            .setAnimation(DialogAnimation.SLIDE_DOWN)
+                            .setGravity(Gravity.CENTER)
+                            .setOnClickListener(object : OnDialogClickListener {
+                                override fun onClick(dialog: AestheticDialog.Builder) {
+                                    dialog.dismiss()
+                                }
+                            }).show()
+                    }
                 }
                 // 血氧
                 3 -> {
@@ -157,12 +184,18 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
 
                             DBUtils.close(connection, statement)
                         }).start()
-                    AlertDialog.Builder(parent.context).apply {
-                        setTitle("血氧量检测结果")
-                        setMessage("动脉血氧量：${arterial}mL/L\n静脉血氧量：${venous}mL/L")
-                        setCancelable(false)
-                        setPositiveButton("确定") { _, _ -> }
-                        show()
+                    getActivity(parent.context)?.let { it1 ->
+                        AestheticDialog.Builder(it1, DialogStyle.RAINBOW, DialogType.SUCCESS)
+                            .setTitle("血氧量检测结果")
+                            .setMessage("动脉血氧量：${arterial}mL/L\n静脉血氧量：${venous}mL/L")
+                            .setCancelable(false)
+                            .setAnimation(DialogAnimation.SLIDE_DOWN)
+                            .setGravity(Gravity.CENTER)
+                            .setOnClickListener(object : OnDialogClickListener {
+                                override fun onClick(dialog: AestheticDialog.Builder) {
+                                    dialog.dismiss()
+                                }
+                            }).show()
                     }
                 }
                 // 血压
@@ -173,8 +206,8 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
                     val sql =
                         "INSERT INTO bloodpressure (userName, time, systolicPressure, diastolicPressure) VALUES (?, ?, ?, ?)"
                     // println(time)
-                    var systolic = Measure().getSystolicPressure()
-                    var diastolic = Measure().getDiastolicPressure()
+                    val systolic = Measure().getSystolicPressure()
+                    val diastolic = Measure().getDiastolicPressure()
                     // 获得数据库连接
                     Thread(
                         Runnable {
@@ -192,12 +225,18 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
 
                             DBUtils.close(connection, statement)
                         }).start()
-                    AlertDialog.Builder(parent.context).apply {
-                        setTitle("血压测量结果")
-                        setMessage("收缩压：$systolic mmHg\n 舒张压：$diastolic mmHg")
-                        setPositiveButton("确认") { _, _ -> }
-                        setCancelable(false)
-                        show()
+                    getActivity(parent.context)?.let { it1 ->
+                        AestheticDialog.Builder(it1, DialogStyle.RAINBOW, DialogType.SUCCESS)
+                            .setTitle("血压测量结果")
+                            .setMessage("收缩压：$systolic mmHg\n 舒张压：$diastolic mmHg")
+                            .setCancelable(false)
+                            .setAnimation(DialogAnimation.SLIDE_DOWN)
+                            .setGravity(Gravity.CENTER)
+                            .setOnClickListener(object : OnDialogClickListener {
+                                override fun onClick(dialog: AestheticDialog.Builder) {
+                                    dialog.dismiss()
+                                }
+                            }).show()
                     }
                 }
                 // 血糖
@@ -225,12 +264,18 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
 
                             DBUtils.close(connection, statement)
                         }).start()
-                    AlertDialog.Builder(parent.context).apply {
-                        setTitle("血糖测量结果")
-                        setMessage("血糖为：$bloodSugar mmol/L")
-                        setCancelable(false)
-                        setPositiveButton("确认") { _, _ -> }
-                        show()
+                    getActivity(parent.context)?.let { it1 ->
+                        AestheticDialog.Builder(it1, DialogStyle.RAINBOW, DialogType.SUCCESS)
+                            .setTitle("血糖测量结果")
+                            .setMessage("血糖：$bloodSugar mmol/L")
+                            .setCancelable(false)
+                            .setAnimation(DialogAnimation.SLIDE_DOWN)
+                            .setGravity(Gravity.CENTER)
+                            .setOnClickListener(object : OnDialogClickListener {
+                                override fun onClick(dialog: AestheticDialog.Builder) {
+                                    dialog.dismiss()
+                                }
+                            }).show()
                     }
                 }
                 // 体重
@@ -258,12 +303,18 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
 
                             DBUtils.close(connection, statement)
                         }).start()
-                    AlertDialog.Builder(parent.context).apply {
-                        setTitle("体重测量结果")
-                        setMessage("体重为：$weight kg")
-                        setCancelable(false)
-                        setPositiveButton("确认") { _, _ -> }
-                        show()
+                    getActivity(parent.context)?.let { it1 ->
+                        AestheticDialog.Builder(it1, DialogStyle.RAINBOW, DialogType.SUCCESS)
+                            .setTitle("体重测量结果")
+                            .setMessage("体重：$weight kg")
+                            .setCancelable(false)
+                            .setAnimation(DialogAnimation.SLIDE_DOWN)
+                            .setGravity(Gravity.CENTER)
+                            .setOnClickListener(object : OnDialogClickListener {
+                                override fun onClick(dialog: AestheticDialog.Builder) {
+                                    dialog.dismiss()
+                                }
+                            }).show()
                     }
                 }
                 // 体温
@@ -291,12 +342,18 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
 
                             DBUtils.close(connection, statement)
                         }).start()
-                    AlertDialog.Builder(parent.context).apply {
-                        setTitle("体温测量结果")
-                        setMessage("体温为：$temperature ℃")
-                        setCancelable(false)
-                        setPositiveButton("确认") { _, _ -> }
-                        show()
+                    getActivity(parent.context)?.let { it1 ->
+                        AestheticDialog.Builder(it1, DialogStyle.RAINBOW, DialogType.SUCCESS)
+                            .setTitle("体温测量结果")
+                            .setMessage("体温为：$temperature ℃")
+                            .setCancelable(false)
+                            .setAnimation(DialogAnimation.SLIDE_DOWN)
+                            .setGravity(Gravity.CENTER)
+                            .setOnClickListener(object : OnDialogClickListener {
+                                override fun onClick(dialog: AestheticDialog.Builder) {
+                                    dialog.dismiss()
+                                }
+                            }).show()
                     }
                 }
                 else -> {
@@ -307,12 +364,12 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
             // preparedStatement.executeUpdate()
             // DBUtils.close(connection, statement)
             // 给出测量完成提示
-            Toasty.success(
-                parent.context,
-                "测量完成",
-                Toast.LENGTH_SHORT,
-                true
-            ).show()
+            // Toasty.success(
+            //     parent.context,
+            //     "测量完成",
+            //     Toast.LENGTH_SHORT,
+            //     true
+            // ).show()
         }
         return viewHolder
     }
