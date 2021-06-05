@@ -67,7 +67,7 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
                     getActivity(parent.context)?.let { it1 ->
                         AestheticDialog.Builder(it1, DialogStyle.RAINBOW, DialogType.SUCCESS)
                             .setTitle("心率检测结果")
-                            .setMessage("心率：${value}次/分")
+                            .setMessage("心率：${value} cpm")
                             .setCancelable(false)
                             .setAnimation(DialogAnimation.SLIDE_DOWN)
                             .setGravity(Gravity.CENTER)
@@ -107,7 +107,7 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
                     getActivity(parent.context)?.let { it1 ->
                         AestheticDialog.Builder(it1, DialogStyle.RAINBOW, DialogType.SUCCESS)
                             .setTitle("睡眠质量检测结果")
-                            .setMessage("睡眠时间：${value}时")
+                            .setMessage("睡眠时间：${value} h")
                             .setCancelable(false)
                             .setAnimation(DialogAnimation.SLIDE_DOWN)
                             .setGravity(Gravity.CENTER)
@@ -228,7 +228,7 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
                     getActivity(parent.context)?.let { it1 ->
                         AestheticDialog.Builder(it1, DialogStyle.RAINBOW, DialogType.SUCCESS)
                             .setTitle("血压测量结果")
-                            .setMessage("收缩压：$systolic mmHg\n 舒张压：$diastolic mmHg")
+                            .setMessage("收缩压：$systolic mmHg\n舒张压：$diastolic mmHg")
                             .setCancelable(false)
                             .setAnimation(DialogAnimation.SLIDE_DOWN)
                             .setGravity(Gravity.CENTER)

@@ -25,7 +25,7 @@ public class Measure {
         return (20..80).random()
     }
 
-    fun getHigh():Int {
+    fun getHigh(): Int {
         // 为了更加真实的模拟，避免随着时间的推移升高呈现上下不定的状态
         if (high == 0) {
             high = (50..210).random()
@@ -74,7 +74,7 @@ public class Measure {
     fun getPsySleepQuality(): Float {
         // 睡眠质量(暂时由 睡眠时间 代替，单位 h)
         // 前者随机数代表 h ，后者随机数代表 min
-        return (3..13).random() + Random.nextFloat()
+        return String.format("%.2f", ((3..13).random() + Random.nextFloat())).toFloat()
     }
 
     /**
@@ -135,6 +135,6 @@ public class Measure {
 
     fun getTemperature(): Float {
         // 测量体温
-        return (36..39).random() + Random.nextFloat()
+        return String.format("%.2f", (36..39).random() + Random.nextFloat()).toFloat()
     }
 }
