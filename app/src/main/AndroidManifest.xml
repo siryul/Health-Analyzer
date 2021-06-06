@@ -13,16 +13,27 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/Theme.HealthAnalyzers">
+        <activity
+            android:name=".LaunchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <receiver
             android:name=".broadcast.NotificationTest"
             android:enabled="true">
-            <!--开机时进行广播-->
+            <!-- 开机时进行广播 -->
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ui.report.YearlyReportActivity"></activity>
+        <activity android:name=".ui.report.YearlyReportActivity" />
         <activity android:name=".ui.report.MonthlyReportActivity" />
         <activity android:name=".ui.report.DailyReportActivity" />
         <activity android:name=".ui.report.WeeklyReportActivity" />
@@ -39,11 +50,7 @@
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
