@@ -73,5 +73,6 @@
     <string name="body_weight_device">称</string>
     <string name="summary_report">总结报告</string>
     <string name="give_advices">给出建议</string>
+    <string name="password_at_least_six">密码（至少6位）</string>
 
 </resources>

@@ -30,8 +30,11 @@ class AlterPasswordActivity : AppCompatActivity() {
         // val image_btn_back = findViewById<ImageButton>(R.id.image_btn_back)
         binding.imageBtnBack.setOnClickListener {
             // 向数据库提交结果
-            userInformation.password = alterResult
-            commitResult(userInformation)
+            // 若是未对密码进行修改，直接返回上一页，无需对数据库更新
+            if (!userInformation.password.equals(alterResult)) {
+                userInformation.password = alterResult
+                commitResult(userInformation)
+            }
             finish()
         }
 
@@ -75,6 +78,6 @@ class AlterPasswordActivity : AppCompatActivity() {
             val statement = connection.createStatement()
             statement.executeUpdate(sql)
             DBUtils.close(connection, statement)
-        }.start()
+        }
     }
 }

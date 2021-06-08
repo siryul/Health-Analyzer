@@ -137,7 +137,7 @@ class MineFragment : androidx.fragment.app.Fragment() {
                         "SELECT high FROM high WHERE userName = $account && time = (SELECT time FROM high ORDER BY time ASC LIMIT 1)"
                     resultSet = statement.executeQuery(sql)
                     if (resultSet.next() && resultSet.getFloat("high") != 0.0f) {
-                        mineList.add(Mine("身高", resultSet.getFloat("high").toString()))
+                        mineList.add(Mine("身高", resultSet.getFloat("high").toString() + " cm"))
                     } else {
                         mineList.add(Mine("身高", ""))
                     }
@@ -145,7 +145,7 @@ class MineFragment : androidx.fragment.app.Fragment() {
                         "SELECT weight FROM weight WHERE userName = $account && time = (SELECT time FROM weight ORDER BY time ASC LIMIT 1)"
                     resultSet = statement.executeQuery(sql)
                     if (resultSet.next() && resultSet.getDouble("weight") != 0.0) {
-                        mineList.add(Mine("体重", resultSet.getDouble("weight").toString()))
+                        mineList.add(Mine("体重", resultSet.getDouble("weight").toString() + " kg"))
                     } else {
                         mineList.add(Mine("体重", ""))
                     }
