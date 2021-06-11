@@ -53,46 +53,60 @@ class DailyReportActivity : AppCompatActivity() {
         val listOfheartRate = ArrayList<Entry>()
         // 根据查询的 今日 检测次数进行对 list 扩充
         addData(listOfheartRate, "heartrate", "heartRate", date, userName)
-        chartDataList.add(CustomLineData(listOfheartRate, "心率"))
+        chartDataList.add(CustomLineData(listOfheartRate, "心率", 60F, 100F, date, 0F, 120F))
 
-        val listOfsleepQuality = ArrayList<Entry>()
-        // 根据查询的 今日 检测次数进行对 list 扩充
-        addData(listOfsleepQuality, "sleepquality", "quality", date, userName)
-        chartDataList.add(CustomLineData(listOfsleepQuality, "睡眠"))
+        // val listOfsleepQuality = ArrayList<Entry>()
+        // // 根据查询的 今日 检测次数进行对 list 扩充
+        // addData(listOfsleepQuality, "sleepquality", "quality", date, userName)
+        // chartDataList.add(CustomLineData(listOfsleepQuality, "睡眠", date))
 
-        val listOfHigh = ArrayList<Entry>()
-        // 根据查询的 今日 检测次数进行对 list 扩充
-        addData(listOfHigh, "high", "high", date, userName)
-        chartDataList.add(CustomLineData(listOfHigh, "身高"))
+        // val listOfHigh = ArrayList<Entry>()
+        // // 根据查询的 今日 检测次数进行对 list 扩充
+        // addData(listOfHigh, "high", "high", date, userName)
+        // chartDataList.add(CustomLineData(listOfHigh, "身高", 30F, 300F, date))
 
-        val listOfBOA = ArrayList<Entry>()  // 动脉血氧量
-        val listOfBOS = ArrayList<Entry>()  // 静脉血氧量
-        // 根据查询的 今日 检测次数进行对 list 扩充
-        addData(listOfBOA, listOfBOS, "bloodoxygen", "ArterialBloodOxygen, VenousBloodOxygen", date, userName)
-        chartDataList.add(CustomLineData(listOfBOA, "血氧饱和度"))
-        chartDataList.add(CustomLineData(listOfBOS, "血氧饱和度"))
-
-        val listOfBPS = ArrayList<Entry>()  // 收缩压
-        val listOfBPD = ArrayList<Entry>()  // 舒张压
-        // 根据查询的 今日 检测次数进行对 list 扩充
-        addData(listOfBPS, listOfBPD, "bloodpressure", "systolicPressure, diastolicPressure", date, userName)
-        chartDataList.add(CustomLineData(listOfBPS, "血压"))
-        chartDataList.add(CustomLineData(listOfBPD, "血压"))
+        // val listOfBOA = ArrayList<Entry>()  // 动脉血氧量
+        // val listOfBOS = ArrayList<Entry>()  // 静脉血氧量
+        // // 根据查询的 今日 检测次数进行对 list 扩充
+        // addData(
+        //     listOfBOA,
+        //     listOfBOS,
+        //     "bloodoxygen",
+        //     "ArterialBloodOxygen, VenousBloodOxygen",
+        //     date,
+        //     userName
+        // )
+        // chartDataList.add(CustomLineData(listOfBOA, "血氧饱和度", date))
+        // chartDataList.add(CustomLineData(listOfBOS, "血氧饱和度", date))
+//
+        // val listOfBPS = ArrayList<Entry>()  // 收缩压
+        // val listOfBPD = ArrayList<Entry>()  // 舒张压
+        // // 根据查询的 今日 检测次数进行对 list 扩充
+        // addData(
+        //     listOfBPS,
+        //     listOfBPD,
+        //     "bloodpressure",
+        //     "systolicPressure, diastolicPressure",
+        //     date,
+        //     userName
+        // )
+        // chartDataList.add(CustomLineData(listOfBPS, "血压", date))
+        // chartDataList.add(CustomLineData(listOfBPD, "血压", date))
 
         val listOfBS = ArrayList<Entry>()
         // 根据查询的 今日 检测次数进行对 list 扩充
         addData(listOfBS, "bloodsugar", "bloodSugar", date, userName)
-        chartDataList.add(CustomLineData(listOfBS, "血糖"))
+        chartDataList.add(CustomLineData(listOfBS, "血糖", 70F, 100F, date, 10F, 150F))
 
-        val listOfWeight = ArrayList<Entry>()
-        // 根据查询的 今日 检测次数进行对 list 扩充
-        addData(listOfWeight, "weight", "weight", date, userName)
-        chartDataList.add(CustomLineData(listOfWeight, "体重"))
+        // val listOfWeight = ArrayList<Entry>()
+        // // 根据查询的 今日 检测次数进行对 list 扩充
+        // addData(listOfWeight, "weight", "weight", date, userName)
+        // chartDataList.add(CustomLineData(listOfWeight, "体重", date))
 
         val listOfTemperature = ArrayList<Entry>()
         // 根据查询的 今日 检测次数进行对 list 扩充
         addData(listOfTemperature, "bodytemperature", "temperature", date, userName)
-        chartDataList.add(CustomLineData(listOfTemperature, "体温"))
+        chartDataList.add(CustomLineData(listOfTemperature, "体温", 36.3F, 37.5F, date, 33F, 43F))
     }
 
     /**

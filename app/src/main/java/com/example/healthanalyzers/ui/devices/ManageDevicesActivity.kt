@@ -35,19 +35,18 @@ class ManageDevicesActivity : AppCompatActivity() {
 
         // 设置设备列表 recyclerView
         val layoutManager = LinearLayoutManager(this)
-        recyclerView = findViewById<RecyclerView>(R.id.recyclerView_device)
+        recyclerView = findViewById(R.id.recyclerView_device)
         recyclerView.layoutManager = layoutManager
         val adapter = DevicesAdapter(this, devicesList, userName!!.toInt())
         recyclerView.adapter = adapter
+        // 设置 recyclerView 的滑动事件的监听，此处可以传入 adapter 是由于自定义的 DevicesAdapter 实现了对应的接口
         val itemTouchCallback = MyItemTouchCallback(adapter)
         val itemTouchHelper = ItemTouchHelper(itemTouchCallback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
         // 返回上一页
-        val image_btn_back = findViewById<ImageButton>(R.id.image_btn_back)
-        image_btn_back.setOnClickListener {
-            // 返回上一页之前将待添加数据 waitToAddDevicesList 加入数据库
-
+        val back: ImageButton = findViewById(R.id.image_btn_back)
+        back.setOnClickListener {
             finish()
         }
     } // onCreate
@@ -63,10 +62,10 @@ class ManageDevicesActivity : AppCompatActivity() {
     //      7 ————> 称
     //      8 ————> 体温计
     // 初始化设备列表
-    fun initDevicesList() {
+    private fun initDevicesList() {
         // 从数据库中查询已拥有的设备
         thread {
-            var sql = "SELECT id, `name`, type FROM `devices` WHERE userName = ${userName}"
+            var sql = "SELECT id, `name`, type FROM `devices` WHERE userName = $userName"
             val connection = DBUtils.getConnection()
             val statement = connection.createStatement()
             var resultSet = statement.executeQuery(sql)

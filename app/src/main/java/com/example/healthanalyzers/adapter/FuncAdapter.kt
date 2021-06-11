@@ -43,7 +43,7 @@ class FuncAdapter(val funcList: List<Func>, val account: String) :
                 0 -> {
                     // 获取当前测量时间
                     val time = Timestamp(Date().time)
-                    // 插入选项依次为：用户名，测量时间，动脉血，静脉血氧饱和度
+                    // 插入选项依次为：用户名，测量时间，心率
                     val sql =
                         "INSERT INTO heartrate (userName, time, heartRate) VALUES (?, ?, ?)"
                     println(time)

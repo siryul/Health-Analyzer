@@ -30,8 +30,8 @@ class DevicesAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.device_item, parent, false)
         val viewHolder = ViewHolder(view)
+        // 测试点击事件是否准确
         viewHolder.itemView.setOnClickListener {
-
             Log.d(
                 "DevicesAdapter",
                 "position at recyclerView is ${viewHolder.adapterPosition}, and the content is ${devicesList[viewHolder.adapterPosition].name}"
@@ -58,10 +58,13 @@ class DevicesAdapter(
         val sql =
             "DELETE FROM devices WHERE userName = $account && id = ${devicesList[position].id}"
         devicesList.removeAt(position)
-        updateDateBase(sql)
+        // 提醒recyclerView有item被删除，需要对视图进行更新
         notifyItemRemoved(position)
+        // 更新数据库
+        updateDateBase(sql)
     }
 
+    // 在删除对应的设备之后，需要对数据库进行更新
     fun updateDateBase(sql: String) {
         thread {
             val connection = DBUtils.getConnection()
