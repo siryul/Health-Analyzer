@@ -47,7 +47,7 @@ class ReportFragment : Fragment() {
             val intent = Intent(context, WeeklyReportActivity::class.java)
             startActivity(intent)
         }
-        getDate()
+        // getDate()
         return root
     }
 
@@ -65,6 +65,6 @@ class ReportFragment : Fragment() {
             e.printStackTrace()
         }
         Log.d("Report", "(${dateFormat.parse(dateFormat.format(Calendar.DATE))}~${dateFormat.format(preDate)})")
-        return "(${dateFormat.parse(dateFormat.format(Calendar.DATE))}~${dateFormat.format(preDate)})"
+        return dateFormat.format(preDate)
     }
 }

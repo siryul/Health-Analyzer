@@ -3,6 +3,7 @@ package com.example.healthanalyzers.ui.report
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,6 +36,7 @@ class DailyReportActivity : AppCompatActivity() {
         recyclerView_daily.layoutManager = layoutManager
         val adapter = ReportAdapter(this, chartDataList, userName)
         recyclerView_daily.adapter = adapter
+        recyclerView_daily.setHasFixedSize(true)
 
         // 返回上一页
         val back = findViewById<ImageButton>(R.id.image_btn_back)
@@ -65,33 +67,73 @@ class DailyReportActivity : AppCompatActivity() {
         // addData(listOfHigh, "high", "high", date, userName)
         // chartDataList.add(CustomLineData(listOfHigh, "身高", 30F, 300F, date))
 
-        // val listOfBOA = ArrayList<Entry>()  // 动脉血氧量
-        // val listOfBOS = ArrayList<Entry>()  // 静脉血氧量
-        // // 根据查询的 今日 检测次数进行对 list 扩充
-        // addData(
-        //     listOfBOA,
-        //     listOfBOS,
-        //     "bloodoxygen",
-        //     "ArterialBloodOxygen, VenousBloodOxygen",
-        //     date,
-        //     userName
-        // )
-        // chartDataList.add(CustomLineData(listOfBOA, "血氧饱和度", date))
-        // chartDataList.add(CustomLineData(listOfBOS, "血氧饱和度", date))
+        val listOfBOA = ArrayList<Entry>()  // 动脉血氧量
+        val listOfBOS = ArrayList<Entry>()  // 静脉血氧量
+        // 根据查询的 今日 检测次数进行对 list 扩充
+        addData(
+            listOfBOA,
+            listOfBOS,
+            "bloodoxygen",
+            "ArterialBloodOxygen, VenousBloodOxygen",
+            date,
+            userName
+        )
+        chartDataList.add(
+            CustomLineData(
+                list = listOfBOA,
+                type = "动脉血氧量",
+                low = 150F,
+                date = date,
+                high = 230F,
+                start = 70F,
+                end = 300F
+            )
+        )
+        chartDataList.add(
+            CustomLineData(
+                list = listOfBOS,
+                type = "静脉血氧量",
+                low = 100F,
+                high = 180F,
+                date = date,
+                start = 50F,
+                end = 250F
+            )
+        )
 //
-        // val listOfBPS = ArrayList<Entry>()  // 收缩压
-        // val listOfBPD = ArrayList<Entry>()  // 舒张压
-        // // 根据查询的 今日 检测次数进行对 list 扩充
-        // addData(
-        //     listOfBPS,
-        //     listOfBPD,
-        //     "bloodpressure",
-        //     "systolicPressure, diastolicPressure",
-        //     date,
-        //     userName
-        // )
-        // chartDataList.add(CustomLineData(listOfBPS, "血压", date))
-        // chartDataList.add(CustomLineData(listOfBPD, "血压", date))
+        val listOfBPS = ArrayList<Entry>()  // 收缩压
+        val listOfBPD = ArrayList<Entry>()  // 舒张压
+        // 根据查询的 今日 检测次数进行对 list 扩充
+        addData(
+            listOfBPS,
+            listOfBPD,
+            "bloodpressure",
+            "systolicPressure, diastolicPressure",
+            date,
+            userName
+        )
+        chartDataList.add(
+            CustomLineData(
+                list = listOfBPS,
+                type = "收缩压",
+                date = date,
+                low = 90F,
+                high = 139F,
+                start = 30F,
+                end = 200F
+            )
+        )
+        chartDataList.add(
+            CustomLineData(
+                list = listOfBPD,
+                type = "舒张压",
+                date = date,
+                low = 60F,
+                high = 89F,
+                start = 0F,
+                end = 150F
+            )
+        )
 
         val listOfBS = ArrayList<Entry>()
         // 根据查询的 今日 检测次数进行对 list 扩充
@@ -107,7 +149,23 @@ class DailyReportActivity : AppCompatActivity() {
         // 根据查询的 今日 检测次数进行对 list 扩充
         addData(listOfTemperature, "bodytemperature", "temperature", date, userName)
         chartDataList.add(CustomLineData(listOfTemperature, "体温", 36.3F, 37.5F, date, 33F, 43F))
+
+
+        // 初始化今日睡眠时间
+        val sleepTime: TextView = findViewById(R.id.tv_sleepTime)
+        thread {
+            val sql = "SELECT quality FROM `sleepquality` WHERE DATE(time) = '$date' AND userName = $userName"
+            val connection = DBUtils.getConnection()
+            val statement = connection.createStatement()
+            val resultSet = statement.executeQuery(sql)
+            if (resultSet.next()) {
+                sleepTime.text = "今日睡眠时间：${resultSet.getFloat(1)} h"
+            } else {
+                sleepTime.text = "今日未对睡眠进行测量"
+            }
+        }
     }
+
 
     /**
      * list: 代表一个个的坐标
@@ -158,7 +216,7 @@ class DailyReportActivity : AppCompatActivity() {
             while (resultSet.next()) {
                 timeOnAxis = resultSet.getInt(1) + resultSet.getInt(2) / 60.0F
                 list1.add(BarEntry(timeOnAxis, resultSet.getInt(3).toFloat()))
-                list1.add(BarEntry(timeOnAxis, resultSet.getInt(4).toFloat()))
+                list2.add(BarEntry(timeOnAxis, resultSet.getInt(4).toFloat()))
             }
             DBUtils.close(connection, statement, resultSet)
         }
