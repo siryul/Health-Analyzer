@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.healthanalyzers.R
@@ -50,6 +51,13 @@ class KnowledgeFragment : Fragment() {
         }
         webView.loadUrl("https://www.kepuchina.cn/health/")
 
+        // 实现点击返回不是返回到首页，而是回到桌面
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object :
+            OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                requireActivity().finish()
+            }
+        })
 
         return root
     }
